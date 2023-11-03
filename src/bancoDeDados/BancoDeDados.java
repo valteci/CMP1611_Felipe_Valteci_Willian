@@ -17,6 +17,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.Calendar;
 import java.util.Date;
+import restaurantes.Restaurante;
 
 /**
  *
@@ -579,7 +580,60 @@ public class BancoDeDados implements IBancoDeDados {
         }
     }
     
+    @Override
+    public ArrayList<Restaurante> getRestaurantes() throws Exception {
+        
+        ArrayList<Restaurante> resultado = new ArrayList<>();
+        
+        String url = getUrl();
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        ResultSet resultadoConsulta;
+        
+        resultadoConsulta = comando.executeQuery(
+                "SELECT * FROM Restaurantes"
+        );
+        
+        
+        
+        while (resultadoConsulta.next()) {
+            
+            int codigo = resultadoConsulta.getInt(
+                    "Cod_Restaurante"
+            );
+            
+            String nome = resultadoConsulta.getString(
+                    "Nome_Restaurante"
+            );
+            
+            Restaurante restaurante = new Restaurante(
+                    codigo,
+                    nome
+            );
+            
+            resultado.add(restaurante);
+        }
+        
+        
+        if (resultadoConsulta != null)
+            resultadoConsulta.close();
+        
+        if (comando != null) {
+            comando.close();
+        }
     
+        if (conexao != null) {
+            conexao.close();
+        }
+        
+        return resultado;
+    }
     
     
     

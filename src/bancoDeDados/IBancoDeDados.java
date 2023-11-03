@@ -8,6 +8,7 @@ import funcionarios.Funcionario;
 import java.util.ArrayList;
 import java.util.Date;
 import funcionarios.Cargo;
+import restaurantes.Restaurante;
 
 /**
  *
@@ -17,6 +18,7 @@ public interface IBancoDeDados {
     public ArrayList<Funcionario> getFuncionarios() throws Exception;
     public Funcionario getFuncionarioCPF(String cpf) throws Exception;
     public void deletarFuncionario(String cpf) throws Exception;
+    public ArrayList<Restaurante> getRestaurantes() throws Exception;
     
     public void inserirFuncionario(
             String cpf,

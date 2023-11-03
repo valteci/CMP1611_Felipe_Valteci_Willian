@@ -115,6 +115,11 @@ public class main extends javax.swing.JFrame {
                 main.this.mouseReleased(evt);
             }
         });
+        bt_restaurantes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_restaurantesActionPerformed(evt);
+            }
+        });
         jPanelFundo.add(bt_restaurantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, 520, 30));
         botoes.add(bt_restaurantes);
 
@@ -156,6 +161,11 @@ public class main extends javax.swing.JFrame {
         
         TelaFuncionario.main(null);
     }//GEN-LAST:event_bt_funcionariosActionPerformed
+
+    private void bt_restaurantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_restaurantesActionPerformed
+        
+        TelaRestaurantes.main(null);
+    }//GEN-LAST:event_bt_restaurantesActionPerformed
 
     /**
      * @param args the command line arguments
