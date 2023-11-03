@@ -629,10 +629,14 @@ public class TelaFuncionario extends javax.swing.JFrame {
           nomedb
             );
             
-            Funcionario funcionario = banco.getFuncionarioCPF(cpf);
-            var funcionarios = new ArrayList<Funcionario>();
-            funcionarios.add(funcionario);
-            mostrarFuncionarios(funcionarios);
+            banco.deletarFuncionario(cpf);
+            
+            JOptionPane.showMessageDialog(
+                    rootPane, 
+                    "Funcionário deletado com sucesso!",
+                    "SUCESSO",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
                                     
         } catch(Exception e) {
             

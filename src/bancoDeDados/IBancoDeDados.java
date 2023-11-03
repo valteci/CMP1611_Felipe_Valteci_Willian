@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public interface IBancoDeDados {
     public ArrayList<Funcionario> getFuncionarios() throws Exception;
     public Funcionario getFuncionarioCPF(String cpf) throws Exception;
+    public void deletarFuncionario(String cpf) throws Exception;
 }
 
 

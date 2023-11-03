@@ -324,6 +324,42 @@ public class BancoDeDados implements IBancoDeDados {
         return funcionario;
     }
     
+    @Override
+    public void deletarFuncionario(String cpf) throws Exception {
+        
+        String url = getUrl();
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        
+        if (! comando.executeQuery(
+                "SELECT * FROM profissionais WHERE Cpf_Profissional = " + 
+                cpf).next()
+        ) {
+            throw new Exception(
+                    "Funcionário não existe ou cpf inválido"
+            );
+        }
+        
+        comando.execute(
+                "DELETE FROM profissionais WHERE Cpf_Profissional = " +
+                cpf
+        );
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+    }
+    
     
     public String getUsuario() {
         return usuario;
