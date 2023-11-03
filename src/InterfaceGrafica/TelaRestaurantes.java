@@ -40,6 +40,21 @@ public class TelaRestaurantes extends javax.swing.JFrame {
         configurarCores();
     }
     
+    public void mostrarCozinheiros(ArrayList<Cozinheiro> cozinheiros) {
+        DefaultTableModel model = (DefaultTableModel) 
+                                   jTable_funcionarios.getModel();
+        
+        while (model.getRowCount()> 0)
+            model.removeRow(0);
+        
+        for (Cozinheiro cozinheiro : cozinheiros) {
+                model.addRow(new Object[]{
+                    cozinheiro.getCpf(),
+                    cozinheiro.getNome()
+                });
+        }
+    }
+    
     
     public void mostrarRestaurantes(ArrayList<Restaurante> restaurantes) {
         
@@ -62,6 +77,7 @@ public class TelaRestaurantes extends javax.swing.JFrame {
         jPanelFundo.setBackground(PaletaCores.FUNDO);
         jPanelTitulo.setBackground(PaletaCores.FUNDO);
         jTable_consulta.setBackground(PaletaCores.FUNDO);
+        jTable_funcionarios.setBackground(PaletaCores.FUNDO);
         
         for (var label : labels)
             label.setForeground(PaletaCores.TEXTO_FONTE);
@@ -113,6 +129,13 @@ public class TelaRestaurantes extends javax.swing.JFrame {
         txt_atualizarCodigo = new javax.swing.JTextField();
         bt_atualizar = new javax.swing.JButton();
         txt_novoNome = new javax.swing.JTextField();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable_funcionarios = new javax.swing.JTable();
+        bt_listarTodosCozinheiros = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        txt_codigoTrabalhou = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -160,8 +183,8 @@ public class TelaRestaurantes extends javax.swing.JFrame {
         panels.add(jPanel1);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("Consultar Restaurante");
-        jPanelFundo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 110, -1, -1));
+        jLabel2.setText("Cuzinheiros Que já trabalharam no Restaurante");
+        jPanelFundo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 400, 360, -1));
         labels.add(jLabel2);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -238,7 +261,7 @@ public class TelaRestaurantes extends javax.swing.JFrame {
         jTable_consulta.setToolTipText("");
         jScrollPane1.setViewportView(jTable_consulta);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 350, 200));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 350, 130));
 
         bt_procrurarCodigo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         bt_procrurarCodigo.setText("Procurar  por Código");
@@ -276,7 +299,7 @@ public class TelaRestaurantes extends javax.swing.JFrame {
         jPanel3.add(bt_listarTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 130, 40));
         botoes.add(bt_listarTodos);
 
-        jPanelFundo.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 130, 420, 320));
+        jPanelFundo.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 120, 420, 240));
         panels.add(jPanel3);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -324,6 +347,79 @@ public class TelaRestaurantes extends javax.swing.JFrame {
 
         jPanelFundo.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 370, 150));
         panels.add(jPanel4);
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(PaletaCores.PANEL_BORDA, 3));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTable_funcionarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "CPF", "Nome"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable_funcionarios.setToolTipText("");
+        jScrollPane2.setViewportView(jTable_funcionarios);
+
+        jPanel5.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 350, 130));
+
+        bt_listarTodosCozinheiros.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_listarTodosCozinheiros.setText("Listar Todos");
+        bt_listarTodosCozinheiros.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                bt_listarTodosCozinheirosmousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                bt_listarTodosCozinheirosmouseReleased(evt);
+            }
+        });
+        bt_listarTodosCozinheiros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_listarTodosCozinheirosActionPerformed(evt);
+            }
+        });
+        jPanel5.add(bt_listarTodosCozinheiros, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, 130, 40));
+        botoes.add(bt_listarTodosCozinheiros);
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel11.setText("Código Restaurante:");
+        jPanel5.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 150, -1));
+        labels.add(jLabel11);
+        jPanel5.add(txt_codigoTrabalhou, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 80, -1));
+
+        jPanelFundo.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 420, 420, 260));
+        panels.add(jPanel5);
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setText("Consultar Restaurante");
+        jPanelFundo.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 100, -1, -1));
+        labels.add(jLabel5);
 
         getContentPane().add(jPanelFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1130, 700));
 
@@ -473,7 +569,7 @@ public class TelaRestaurantes extends javax.swing.JFrame {
             
             String codigo_str = JOptionPane.showInputDialog(
                     this,
-                    "Digite o CPF do funcionário:"
+                    "Digite o código do restaurante:"
             );
             
             if (codigo_str == null || codigo_str.equals(""))
@@ -505,6 +601,44 @@ public class TelaRestaurantes extends javax.swing.JFrame {
             );
         }
     }//GEN-LAST:event_bt_procrurarCodigoActionPerformed
+
+    private void bt_listarTodosCozinheirosmousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_listarTodosCozinheirosmousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bt_listarTodosCozinheirosmousePressed
+
+    private void bt_listarTodosCozinheirosmouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_listarTodosCozinheirosmouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bt_listarTodosCozinheirosmouseReleased
+
+    private void bt_listarTodosCozinheirosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_listarTodosCozinheirosActionPerformed
+        
+        try {
+            
+            int codigo = Integer.parseInt(txt_codigoTrabalhou.getText());                        
+            
+            BancoDeDados banco = BancoDeDados.getInstance(
+                    usuario,
+                    senha,
+          nomedb
+            );
+            
+            banco.getRestauranteCodigo(codigo);
+            ArrayList<Cozinheiro> cozinheiros = banco
+                    .getCozinheirosRestaurante(codigo);
+            
+            
+            mostrarCozinheiros(cozinheiros);
+                                    
+        } catch(Exception e) {
+            
+            JOptionPane.showMessageDialog(
+                    rootPane,
+                    e.getMessage(),
+                    "ERRO",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }//GEN-LAST:event_bt_listarTodosCozinheirosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -546,12 +680,15 @@ public class TelaRestaurantes extends javax.swing.JFrame {
     private javax.swing.JButton bt_cadastrar;
     private javax.swing.JButton bt_deletar;
     private javax.swing.JButton bt_listarTodos;
+    private javax.swing.JButton bt_listarTodosCozinheiros;
     private javax.swing.JButton bt_procrurarCodigo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -560,12 +697,16 @@ public class TelaRestaurantes extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanelFundo;
     private javax.swing.JPanel jPanelTitulo;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable_consulta;
+    private javax.swing.JTable jTable_funcionarios;
     private javax.swing.JTextField txt_atualizarCodigo;
     private javax.swing.JTextField txt_cadastrarNome;
+    private javax.swing.JTextField txt_codigoTrabalhou;
     private javax.swing.JTextField txt_deletarCodigo;
     private javax.swing.JTextField txt_novoNome;
     // End of variables declaration//GEN-END:variables

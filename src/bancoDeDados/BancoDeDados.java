@@ -4,6 +4,7 @@
  */
 package bancoDeDados;
 
+import categoria.Categoria;
 import funcionarios.Cargo;
 import funcionarios.Cozinheiro;
 import funcionarios.Degustador;
@@ -753,7 +754,207 @@ public class BancoDeDados implements IBancoDeDados {
         }
     }
     
+    @Override
+    public ArrayList<Cozinheiro> getCozinheirosRestaurante(int codigo) throws Exception {
+        
+        ArrayList<Cozinheiro> resultado = new ArrayList<>();
+        
+        String url = getUrl();
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        ResultSet resultadoConsulta;
+        
+        resultadoConsulta = comando.executeQuery(
+                "select y.Cpf_Coz, y.Nome_Coz  from Curriculo x " +
+                "INNER JOIN Cozinheiros y ON x.Cpf_Coz = y.Cpf_Coz" + 
+                " WHERE Cod_Restaurante =" + codigo
+        );
+        
+        
+        
+        while (resultadoConsulta.next()) {
+            
+            String cpf = resultadoConsulta.getString(
+                    "Cpf_Coz"
+            );
+            
+            String nome = resultadoConsulta.getString(
+                    "Nome_Coz"
+            );
+            
+            Cozinheiro cozinheiro = new Cozinheiro();
+            cozinheiro.setNome(nome);
+            cozinheiro.setCpf(cpf);
+            
+            resultado.add(cozinheiro);
+        }
+        
+        
+        if (resultadoConsulta != null)
+            resultadoConsulta.close();
+        
+        if (comando != null) {
+            comando.close();
+        }
     
+        if (conexao != null) {
+            conexao.close();
+        }
+        
+        return resultado;
+    }
+    
+    
+    @Override
+    public ArrayList<Categoria> getCategorias() throws Exception {
+        ArrayList<Categoria> resultado = new ArrayList<>();
+        
+        String url = getUrl();
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        ResultSet resultadoConsulta;
+        
+        resultadoConsulta = comando.executeQuery(
+                "SELECT * FROM Categoria_Receita "
+        );
+        
+        
+        
+        while (resultadoConsulta.next()) {
+            
+            int codigo = resultadoConsulta.getInt(
+                    "Cod_Cat_Rec"
+            );
+            
+            String descricao = resultadoConsulta.getString(
+                    "Desc_Cat_Rec"
+            );
+            
+            Categoria categoria = new Categoria();
+            categoria.setCodigo(codigo);
+            categoria.setDescricao(descricao);
+            
+            resultado.add(categoria);
+        }
+        
+        
+        if (resultadoConsulta != null)
+            resultadoConsulta.close();
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+        
+        return resultado;
+    }
+    
+    @Override
+    public Categoria getCategoriaCodigo(int codigo) throws Exception {
+        
+        String url = getUrl();
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        ResultSet resultadoConsulta;
+        
+        resultadoConsulta = comando.executeQuery(
+                "SELECT * FROM CATEGORIA_RECEITA WHERE Cod_Cat_Rec = " +
+                codigo
+        );
+        
+        if (! resultadoConsulta.next())
+            throw new Exception(
+                    "Categoria não existe ou código inválido"
+            );
+                                
+            
+            String descricao = resultadoConsulta.getString("Desc_Cat_Rec");
+            Categoria categoria = new Categoria(
+                    codigo,
+                    descricao
+            );
+            
+            if (resultadoConsulta != null)
+                resultadoConsulta.close();
+        
+            if (comando != null)
+                comando.close();
+
+            if (conexao != null)
+                conexao.close();
+        
+            return categoria;
+    }
+    
+    @Override
+    public void inserirCategoria(String descricao) throws Exception {
+        String url = getUrl();
+        String query = "INSERT INTO Categoria_Receita (Desc_Cat_Rec) VALUES " +
+                       "('"+ descricao +"')";
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        comando.execute(query);
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+    }
+    
+    
+    @Override
+    public void atualizarCategoria(int codigo, String novaDescricao) throws Exception {
+        String url = getUrl();
+        String query = "UPDATE categoria_receita SET Desc_Cat_Rec = '" + 
+                       novaDescricao + "' WHERE Cod_Cat_Rec = " + codigo;
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        comando.execute(query);
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+    }
     
     public String getUsuario() {
         return usuario;

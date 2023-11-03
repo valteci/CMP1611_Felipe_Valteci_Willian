@@ -38,7 +38,7 @@ public class main extends javax.swing.JFrame {
         jPanelFundo = new javax.swing.JPanel();
         bt_ingredientes = new javax.swing.JButton();
         bt_funcionarios = new javax.swing.JButton();
-        bt_receitas = new javax.swing.JButton();
+        bt_categoria = new javax.swing.JButton();
         bt_restaurantes = new javax.swing.JButton();
         bt_livroReceitas = new javax.swing.JButton();
 
@@ -83,11 +83,11 @@ public class main extends javax.swing.JFrame {
         jPanelFundo.add(bt_funcionarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 520, 30));
         botoes.add(bt_funcionarios);
 
-        bt_receitas.setBackground(new java.awt.Color(255, 255, 255));
-        bt_receitas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        bt_receitas.setForeground(new java.awt.Color(0, 0, 0));
-        bt_receitas.setText("Receitas");
-        bt_receitas.addMouseListener(new java.awt.event.MouseAdapter() {
+        bt_categoria.setBackground(new java.awt.Color(255, 255, 255));
+        bt_categoria.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_categoria.setForeground(new java.awt.Color(0, 0, 0));
+        bt_categoria.setText("Categoria");
+        bt_categoria.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 mousePress(evt);
             }
@@ -95,13 +95,13 @@ public class main extends javax.swing.JFrame {
                 main.this.mouseReleased(evt);
             }
         });
-        bt_receitas.addActionListener(new java.awt.event.ActionListener() {
+        bt_categoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_receitasActionPerformed(evt);
+                bt_categoriaActionPerformed(evt);
             }
         });
-        jPanelFundo.add(bt_receitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 520, 30));
-        botoes.add(bt_receitas);
+        jPanelFundo.add(bt_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 520, 30));
+        botoes.add(bt_categoria);
 
         bt_restaurantes.setBackground(new java.awt.Color(255, 255, 255));
         bt_restaurantes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -153,9 +153,9 @@ public class main extends javax.swing.JFrame {
         botao.setBackground(PaletaCores.BOTAO);
     }//GEN-LAST:event_mouseReleased
 
-    private void bt_receitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_receitasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bt_receitasActionPerformed
+    private void bt_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_categoriaActionPerformed
+        TelaCategoria.main(null);
+    }//GEN-LAST:event_bt_categoriaActionPerformed
 
     private void bt_funcionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_funcionariosActionPerformed
         
@@ -203,10 +203,10 @@ public class main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_categoria;
     private javax.swing.JButton bt_funcionarios;
     private javax.swing.JButton bt_ingredientes;
     private javax.swing.JButton bt_livroReceitas;
-    private javax.swing.JButton bt_receitas;
     private javax.swing.JButton bt_restaurantes;
     private javax.swing.JPanel jPanelFundo;
     // End of variables declaration//GEN-END:variables

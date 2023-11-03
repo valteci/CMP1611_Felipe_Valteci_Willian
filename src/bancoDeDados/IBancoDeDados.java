@@ -4,10 +4,12 @@
  */
 package bancoDeDados;
 
+import categoria.Categoria;
 import funcionarios.Funcionario;
 import java.util.ArrayList;
 import java.util.Date;
 import funcionarios.Cargo;
+import funcionarios.Cozinheiro;
 import restaurantes.Restaurante;
 
 /**
@@ -23,6 +25,13 @@ public interface IBancoDeDados {
     public void inserirRestaurante(String nome) throws Exception;
     public void deletarRestaurante(int codigo) throws Exception;
     public void atualizarRestaurante(int codigo, String novoNome) throws Exception;
+    public ArrayList<Cozinheiro> getCozinheirosRestaurante(int codigo) throws Exception;
+    
+    public ArrayList<Categoria> getCategorias() throws Exception;
+    public Categoria getCategoriaCodigo(int codigo) throws Exception;
+    public void inserirCategoria(String descricao) throws Exception;
+    public void atualizarCategoria(int codigo, String novaDescricao) throws Exception;
+    
     
     public void inserirFuncionario(
             String cpf,
