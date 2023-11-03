@@ -19,6 +19,10 @@ public interface IBancoDeDados {
     public Funcionario getFuncionarioCPF(String cpf) throws Exception;
     public void deletarFuncionario(String cpf) throws Exception;
     public ArrayList<Restaurante> getRestaurantes() throws Exception;
+    public Restaurante getRestauranteCodigo(int codigo) throws Exception;
+    public void inserirRestaurante(String nome) throws Exception;
+    public void deletarRestaurante(int codigo) throws Exception;
+    public void atualizarRestaurante(int codigo, String novoNome) throws Exception;
     
     public void inserirFuncionario(
             String cpf,

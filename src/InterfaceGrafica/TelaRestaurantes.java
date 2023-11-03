@@ -98,7 +98,7 @@ public class TelaRestaurantes extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        txt_deletarNome = new javax.swing.JTextField();
+        txt_deletarCodigo = new javax.swing.JTextField();
         bt_deletar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -110,9 +110,9 @@ public class TelaRestaurantes extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        txt_novoNome = new javax.swing.JTextField();
-        txt_codigo = new javax.swing.JSpinner();
+        txt_atualizarCodigo = new javax.swing.JTextField();
         bt_atualizar = new javax.swing.JButton();
+        txt_novoNome = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -173,10 +173,10 @@ public class TelaRestaurantes extends javax.swing.JFrame {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel7.setText("Nome:");
+        jLabel7.setText("Código:");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 60, -1));
         labels.add(jLabel7);
-        jPanel2.add(txt_deletarNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, 150, -1));
+        jPanel2.add(txt_deletarCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, 150, -1));
 
         bt_deletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         bt_deletar.setText("Deletar");
@@ -250,6 +250,11 @@ public class TelaRestaurantes extends javax.swing.JFrame {
                 TelaRestaurantes.this.mouseReleased(evt);
             }
         });
+        bt_procrurarCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_procrurarCodigoActionPerformed(evt);
+            }
+        });
         jPanel3.add(bt_procrurarCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, 190, 40));
         botoes.add(bt_procrurarCodigo);
 
@@ -296,8 +301,7 @@ public class TelaRestaurantes extends javax.swing.JFrame {
         jLabel8.setText("Novo Nome:");
         jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 90, -1));
         labels.add(jLabel8);
-        jPanel4.add(txt_novoNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 190, -1));
-        jPanel4.add(txt_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 110, -1));
+        jPanel4.add(txt_atualizarCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, 150, -1));
 
         bt_atualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         bt_atualizar.setText("Atualizar");
@@ -316,6 +320,7 @@ public class TelaRestaurantes extends javax.swing.JFrame {
         });
         jPanel4.add(bt_atualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 280, 30));
         botoes.add(bt_atualizar);
+        jPanel4.add(txt_novoNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 190, -1));
 
         jPanelFundo.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 370, 150));
         panels.add(jPanel4);
@@ -326,15 +331,103 @@ public class TelaRestaurantes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bt_cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cadastrarActionPerformed
-        // TODO add your handling code here:
+        try {
+            String nome = txt_cadastrarNome.getText();
+            
+            BancoDeDados banco = BancoDeDados.getInstance(
+                    usuario,
+                    senha,
+                    nomedb
+            );
+            
+            banco.inserirRestaurante(nome);
+            
+            JOptionPane.showMessageDialog(
+                    rootPane, 
+                    "Restaurante Cadastrado com sucesso!",
+                    "SUCESSO",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            
+            
+        } catch(Exception e) {
+            
+            JOptionPane.showMessageDialog(
+                    rootPane,
+                    e.getMessage(),
+                    "ERRO",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_bt_cadastrarActionPerformed
 
     private void bt_atualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_atualizarActionPerformed
-        // TODO add your handling code here:
+        
+        try {
+            
+            int codigo = Integer.parseInt(txt_atualizarCodigo.getText());
+            String novoNome = txt_novoNome.getText();
+            
+            BancoDeDados banco = BancoDeDados.getInstance(
+                    usuario,
+                    senha,
+                    nomedb
+            );
+            
+            banco.getRestauranteCodigo(codigo);
+            banco.atualizarRestaurante(codigo, novoNome);
+            
+            
+            JOptionPane.showMessageDialog(
+                    rootPane, 
+                    "Restaurante atualizado com sucesso!",
+                    "SUCESSO",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            
+        } catch(Exception e) {
+            
+            JOptionPane.showMessageDialog(
+                    rootPane,
+                    e.getMessage(),
+                    "ERRO",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_bt_atualizarActionPerformed
 
     private void bt_deletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_deletarActionPerformed
-        // TODO add your handling code here:
+        
+        try {
+            
+            int codigo = Integer.parseInt(txt_deletarCodigo.getText());
+            
+            BancoDeDados banco = BancoDeDados.getInstance(
+                    usuario,
+                    senha,
+                    nomedb
+            );
+            
+            
+            banco.getRestauranteCodigo(codigo);
+            banco.deletarRestaurante(codigo);
+            
+            JOptionPane.showMessageDialog(
+                    rootPane, 
+                    "Restaurante deletado com sucesso!",
+                    "SUCESSO",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            
+        } catch(Exception e) {
+            
+            JOptionPane.showMessageDialog(
+                    rootPane,
+                    e.getMessage(),
+                    "ERRO",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_bt_deletarActionPerformed
 
     private void mousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mousePressed
@@ -373,6 +466,45 @@ public class TelaRestaurantes extends javax.swing.JFrame {
             );
         }
     }//GEN-LAST:event_bt_listarTodosActionPerformed
+
+    private void bt_procrurarCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_procrurarCodigoActionPerformed
+        
+        try {
+            
+            String codigo_str = JOptionPane.showInputDialog(
+                    this,
+                    "Digite o CPF do funcionário:"
+            );
+            
+            if (codigo_str == null || codigo_str.equals(""))
+                return;
+            
+            if (! codigo_str.matches("\\d+"))
+                throw new Exception("Erro: código inválido");
+            
+            int codigo = Integer.parseInt(codigo_str);
+            
+            BancoDeDados banco = BancoDeDados.getInstance(
+                    usuario,
+                    senha,
+          nomedb
+            );
+            
+            Restaurante restaurante = banco.getRestauranteCodigo(codigo);
+            var restaurantes = new ArrayList<Restaurante>();
+            restaurantes.add(restaurante);
+            mostrarRestaurantes(restaurantes);
+                                    
+        } catch(Exception e) {
+            
+            JOptionPane.showMessageDialog(
+                    rootPane,
+                    e.getMessage(),
+                    "ERRO",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }//GEN-LAST:event_bt_procrurarCodigoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -432,9 +564,9 @@ public class TelaRestaurantes extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelTitulo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_consulta;
+    private javax.swing.JTextField txt_atualizarCodigo;
     private javax.swing.JTextField txt_cadastrarNome;
-    private javax.swing.JSpinner txt_codigo;
-    private javax.swing.JTextField txt_deletarNome;
+    private javax.swing.JTextField txt_deletarCodigo;
     private javax.swing.JTextField txt_novoNome;
     // End of variables declaration//GEN-END:variables
 }

@@ -635,7 +635,123 @@ public class BancoDeDados implements IBancoDeDados {
         return resultado;
     }
     
+    @Override
+    public void inserirRestaurante(String nome) throws Exception {
+        String url = getUrl();
+        String query = "INSERT INTO Restaurantes (Nome_Restaurante) VALUES " +
+                       "('"+ nome +"')";
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        comando.execute(query);
+        
+        if (comando != null) {
+            comando.close();
+        }
     
+        if (conexao != null) {
+            conexao.close();
+        }
+    }
+    
+    @Override
+    public void deletarRestaurante(int codigo) throws Exception {
+        String url = getUrl();
+        String query = "DELETE FROM Restaurantes WHERE Cod_Restaurante = " +
+                codigo;
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        comando.execute(query);
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+    }
+    
+    
+    @Override
+    public Restaurante getRestauranteCodigo(int codigo) throws Exception {
+        String url = getUrl();
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        ResultSet resultadoConsulta;
+        
+        resultadoConsulta = comando.executeQuery(
+                "SELECT * FROM Restaurantes WHERE cod_restaurante = " +
+                codigo
+        );
+        
+        if (! resultadoConsulta.next())
+            throw new Exception(
+                    "Restaurante não existe ou código inválido"
+            );
+                                
+            
+            String nome = resultadoConsulta.getString("Nome_Restaurante");
+            Restaurante restaurante = new Restaurante(
+                    codigo,
+                    nome
+            );
+            
+            if (resultadoConsulta != null)
+                resultadoConsulta.close();
+        
+            if (comando != null)
+                comando.close();
+
+            if (conexao != null)
+                conexao.close();
+        
+            return restaurante;
+    }
+    
+    
+    @Override
+    public void atualizarRestaurante(int codigo, String novoNome
+    ) throws Exception {
+        
+        String url = getUrl();
+        String query = "UPDATE Restaurantes SET Nome_Restaurante = '"+
+                       novoNome + "' WHERE Cod_Restaurante = " + codigo;
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        comando.execute(query);
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+    }
     
     
     
