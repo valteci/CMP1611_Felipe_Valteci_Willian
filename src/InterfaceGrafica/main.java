@@ -41,6 +41,7 @@ public class main extends javax.swing.JFrame {
         bt_categoria = new javax.swing.JButton();
         bt_restaurantes = new javax.swing.JButton();
         bt_livroReceitas = new javax.swing.JButton();
+        bt_ingredientes1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -58,6 +59,11 @@ public class main extends javax.swing.JFrame {
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 main.this.mouseReleased(evt);
+            }
+        });
+        bt_ingredientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_ingredientesActionPerformed(evt);
             }
         });
         jPanelFundo.add(bt_ingredientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 350, 520, 30));
@@ -143,6 +149,21 @@ public class main extends javax.swing.JFrame {
         jPanelFundo.add(bt_livroReceitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 300, 520, 30));
         botoes.add(bt_livroReceitas);
 
+        bt_ingredientes1.setBackground(new java.awt.Color(255, 255, 255));
+        bt_ingredientes1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_ingredientes1.setForeground(new java.awt.Color(0, 0, 0));
+        bt_ingredientes1.setText("Receitas");
+        bt_ingredientes1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                bt_ingredientes1mousePress(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                bt_ingredientes1mouseReleased(evt);
+            }
+        });
+        jPanelFundo.add(bt_ingredientes1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 400, 520, 30));
+        botoes.add(bt_ingredientes);
+
         getContentPane().add(jPanelFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 870, 520));
 
         pack();
@@ -176,6 +197,19 @@ public class main extends javax.swing.JFrame {
         
         TelaLivros.main(null);
     }//GEN-LAST:event_bt_livroReceitasActionPerformed
+
+    private void bt_ingredientes1mousePress(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_ingredientes1mousePress
+        
+    }//GEN-LAST:event_bt_ingredientes1mousePress
+
+    private void bt_ingredientes1mouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_ingredientes1mouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bt_ingredientes1mouseReleased
+
+    private void bt_ingredientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_ingredientesActionPerformed
+        
+        TelaIngredientes.main(null);
+    }//GEN-LAST:event_bt_ingredientesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,6 +250,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JButton bt_categoria;
     private javax.swing.JButton bt_funcionarios;
     private javax.swing.JButton bt_ingredientes;
+    private javax.swing.JButton bt_ingredientes1;
     private javax.swing.JButton bt_livroReceitas;
     private javax.swing.JButton bt_restaurantes;
     private javax.swing.JPanel jPanelFundo;

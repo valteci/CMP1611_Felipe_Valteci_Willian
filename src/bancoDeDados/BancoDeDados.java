@@ -11,6 +11,7 @@ import funcionarios.Cozinheiro;
 import funcionarios.Degustador;
 import funcionarios.Editor;
 import funcionarios.Funcionario;
+import ingredientes.Ingrediente;
 import java.util.ArrayList;
 
 import java.sql.Connection;
@@ -1165,9 +1166,63 @@ public class BancoDeDados implements IBancoDeDados {
         if (conexao != null) {
             conexao.close();
         }
-        
-        
     }
+    
+    public ArrayList<Ingrediente> getIngredientes() throws Exception {
+        
+        ArrayList<Ingrediente> resultado = new ArrayList<>();
+        
+        String url = getUrl();
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        ResultSet resultadoConsulta;
+        
+        resultadoConsulta = comando.executeQuery(
+                "SELECT * FROM ingrediente"
+        );
+        
+        
+        
+        while (resultadoConsulta.next()) {
+            
+            int codigo = resultadoConsulta.getInt(
+                    "Cod_Ingrediente"
+            );
+            
+            String nome = resultadoConsulta.getString(
+                    "Nome_Ingrediente"
+            );
+            
+            Ingrediente ingrediente = new Ingrediente(
+                    codigo,
+                    nome
+            );
+            
+            resultado.add(ingrediente);
+        }
+        
+        
+        if (resultadoConsulta != null)
+            resultadoConsulta.close();
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+        
+        return resultado;
+    }
+    
+    
     
     public String getUsuario() {
         return usuario;

@@ -90,7 +90,7 @@ public class TelaRestaurantes extends javax.swing.JFrame {
     }
     
     private void configurarTela() {
-        this.setLocationRelativeTo(null);                                
+        this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }
 

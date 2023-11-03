@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import funcionarios.Cargo;
 import funcionarios.Cozinheiro;
+import ingredientes.Ingrediente;
 import restaurantes.Restaurante;
 
 /**
@@ -40,6 +41,8 @@ public interface IBancoDeDados {
     public Livro getLivroISBN(String ISBN) throws Exception;
     public void deletarLivro(String ISBN) throws Exception;
     public void atualizarLivro(Livro livro, String ISBNoriginal) throws Exception;
+    
+    public ArrayList<Ingrediente> getIngredientes() throws Exception;
     
     public void inserirFuncionario(
             String cpf,
