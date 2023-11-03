@@ -4,6 +4,7 @@
  */
 package bancoDeDados;
 
+import funcionarios.Cargo;
 import funcionarios.Cozinheiro;
 import funcionarios.Degustador;
 import funcionarios.Editor;
@@ -14,6 +15,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -350,6 +352,110 @@ public class BancoDeDados implements IBancoDeDados {
                 "DELETE FROM profissionais WHERE Cpf_Profissional = " +
                 cpf
         );
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+    }
+    
+    @Override
+    public void inserirFuncionario(
+            String cpf,
+            String nome, 
+            Date dataIngresso,
+            float salario,
+            String nomeFantasia,
+            Cargo.tipo cargo            
+    ) throws Exception {
+        
+        String posQuery = "";
+        String preQuery = "INSERT INTO Profissionais (Cpf_Profissional)" +
+                          "VALUES (" + cpf + ")";
+        
+        Calendar  calendario = Calendar.getInstance();
+        calendario.setTime(dataIngresso);
+        int dia = calendario.get(Calendar.DAY_OF_MONTH);
+        int mes = calendario.get(Calendar.MONTH) + 1;
+        int ano = calendario.get(Calendar.YEAR);                                
+        
+        String salarioFormatado = String.format(
+                "%.2f",
+                salario
+                ).replace(
+                        ',',
+                        '.'
+        );
+        
+        
+        switch (cargo) {
+            case COZINHEIRO:
+                posQuery = """
+                        INSERT INTO Cozinheiros 
+                        (Nome_Coz, Nome_Fantasia, Dt_Contrato_Coz, Salario_Coz, 
+                        Cpf_Coz) VALUES ('%s', '%s', '%d-%d-%d', %s, %s)
+                        """.formatted(
+                                nome,
+                                nomeFantasia,
+                                ano,
+                                mes,
+                                dia,
+                                salarioFormatado,
+                                cpf
+                        );
+                break;
+                
+            case DEGUSTADOR:
+                posQuery = """
+                        INSERT INTO degustadores 
+                        (Nome_deg, Dt_Contrato_deg, Salario_deg, Cpf_deg) 
+                        VALUES ('%s', '%d-%d-%d', %s, %s)
+                        """.formatted(
+                                nome,                                
+                                ano,
+                                mes,
+                                dia,
+                                salarioFormatado,
+                                cpf
+                        );
+                
+                break;
+                
+            case EDITOR:
+                posQuery = """
+                        INSERT INTO Editores 
+                        (Nome_Edit, Dt_Contrato_Edit, Salario_Edit, Cpf_Edit) 
+                        VALUES ('%s', '%d-%d-%d', %s, %s)
+                        """.formatted(
+                                nome,                                
+                                ano,
+                                mes,
+                                dia,
+                                salarioFormatado,
+                                cpf
+                        );
+                
+                break;
+        }
+        
+        String url = getUrl();
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        
+        System.out.println(preQuery + "\n----------");
+        System.out.println(posQuery + "\n----------");
+        
+        comando.execute(preQuery);
+        comando.execute(posQuery);
         
         if (comando != null) {
             comando.close();

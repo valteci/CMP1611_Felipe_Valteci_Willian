@@ -32,6 +32,15 @@ public abstract class Funcionario {
         this.dataIngresso = dataIngresso;
         this.salario = salario;
     }        
+    
+    public static boolean eCPFvalido(String cpf) {
+        
+        if (cpf.length() != 11) return false;
+        if (!cpf.matches("\\d+")) return false;
+        
+        
+        return true;
+    }
 
     public String getNome() {
         return nome;

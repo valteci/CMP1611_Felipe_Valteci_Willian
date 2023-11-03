@@ -5,10 +5,14 @@
 package InterfaceGrafica;
 
 import bancoDeDados.BancoDeDados;
+import funcionarios.Cargo;
 import funcionarios.Cozinheiro;
 import funcionarios.Degustador;
 import funcionarios.Funcionario;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -251,6 +255,11 @@ public class TelaFuncionario extends javax.swing.JFrame {
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 TelaFuncionario.this.mouseReleased(evt);
+            }
+        });
+        bt_cadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_cadastrarActionPerformed(evt);
             }
         });
         jPanel2.add(bt_cadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 360, 30));
@@ -648,6 +657,110 @@ public class TelaFuncionario extends javax.swing.JFrame {
             );
         }
     }//GEN-LAST:event_bt_deletarActionPerformed
+
+    private void bt_cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cadastrarActionPerformed
+        
+        try {
+
+            BancoDeDados banco = BancoDeDados.getInstance(
+                  usuario,
+                    senha,
+              nomedb
+                );
+
+            String nome = "";
+            String cpf = "";
+            float salario = 0;
+            Date dataIngresso = null;
+            String nomeFantasia = "";
+            Cargo.tipo cargo = null;
+            
+            if (txt_nome.getText().equals(""))
+                throw new Exception(
+                        "Erro: nome é um campo obrigatório"
+                );
+            
+            if (txt_cpf.getText().equals(""))
+                throw new Exception(
+                        "Erro: cpf é um campo obrigatório"
+                );
+            
+            if (txt_salario.getText().equals(""))
+                throw new Exception(
+                        "Erro: salario é um campo obrigatório"
+                );
+            
+            if (txt_dataIngresso.getText().equals(""))
+                throw new Exception(
+                        "Erro: data de ingresso é um campo obrigatório"
+                );
+            
+            cpf = txt_cpf.getText();
+            
+            if (! Funcionario.eCPFvalido(cpf))
+                throw new Exception(
+                        "Erro: CPF inválido"
+                );
+            
+            salario = Float.parseFloat(
+                    txt_salario.getText()
+            );
+            
+            
+            SimpleDateFormat dataFormato = new SimpleDateFormat(
+                    "dd/MM/yyyy"
+            );
+            
+            dataIngresso = dataFormato.parse(txt_dataIngresso.getText());
+            
+            nome = txt_nome.getText();
+            
+            if (cb_tipo.getSelectedItem().toString().equalsIgnoreCase(
+                    "cozinheiro")
+            ) {
+                cargo = Cargo.tipo.COZINHEIRO;
+                nomeFantasia = txt_nomeFantasia.getText();
+                
+            } else if(cb_tipo.getSelectedItem().toString().equalsIgnoreCase(
+                    "degustador")
+            ) {
+                cargo = Cargo.tipo.DEGUSTADOR;
+            } else {
+                cargo = Cargo.tipo.EDITOR;
+            }
+            
+
+            
+            banco.inserirFuncionario(
+                    cpf,
+                    nome,
+                    dataIngresso,
+                    salario,
+                    nomeFantasia,
+                    cargo
+            );
+            
+            
+            JOptionPane.showMessageDialog(
+                    rootPane, 
+                    "Funcionário deletado com sucesso!",
+                    "SUCESSO",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            
+        
+        } catch(Exception e) {
+            
+            JOptionPane.showMessageDialog(
+                    rootPane,
+                    e.getMessage(),
+                    "ERRO",
+                    JOptionPane.ERROR_MESSAGE
+            );            
+        }
+        
+        
+    }//GEN-LAST:event_bt_cadastrarActionPerformed
 
     /**
      * @param args the command line arguments
