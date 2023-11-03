@@ -450,10 +450,7 @@ public class BancoDeDados implements IBancoDeDados {
         );
         
         Statement comando = conexao.createStatement();
-        
-        System.out.println(preQuery + "\n----------");
-        System.out.println(posQuery + "\n----------");
-        
+                
         comando.execute(preQuery);
         comando.execute(posQuery);
         
@@ -465,6 +462,127 @@ public class BancoDeDados implements IBancoDeDados {
             conexao.close();
         }
     }
+    
+    
+    
+    @Override
+    public void atualizarFuncionario(
+            Funcionario novo,
+            String cpfOriginal
+    ) throws Exception {
+        
+        String queryAlterarCpf = "";
+        String url = getUrl();
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        
+        if (! novo.getCpf().equals(cpfOriginal)) {
+            queryAlterarCpf = """
+                              UPDATE Profissionais SET Cpf_Profissional = %s 
+                              WHERE Cpf_Profissional = %s                              
+                              """.formatted(
+                                      novo.getCpf(),
+                                      cpfOriginal
+                              );
+            
+            comando.execute(queryAlterarCpf);
+        }
+        
+        
+        
+        String queryAlterarDados = "";
+        
+        Calendar  calendario = Calendar.getInstance();
+        calendario.setTime(novo.getDataIngresso());
+        int dia = calendario.get(Calendar.DAY_OF_MONTH);
+        int mes = calendario.get(Calendar.MONTH) + 1;
+        int ano = calendario.get(Calendar.YEAR);                                
+        
+        String salarioFormatado = String.format(
+                "%.2f",
+                novo.getSalario()
+                ).replace(
+                        ',',
+                        '.'
+        );
+        
+        if (novo instanceof Cozinheiro cozinheiro) {
+            
+            queryAlterarDados = """
+                    UPDATE cozinheiros SET 
+                    Nome_Coz = '%s',
+                    Nome_Fantasia = '%s',
+                    Dt_Contrato_Coz = '%d-%d-%d',
+                    Salario_Coz = %s
+                    WHERE Cpf_Coz = %s
+                    """.formatted(
+                            novo.getNome(),
+                            cozinheiro.getNomeFantasia(),
+                            ano,
+                            mes,
+                            dia,
+                            salarioFormatado,
+                            novo.getCpf()
+                    );
+            
+        }
+        else if (novo instanceof Degustador) {
+            
+            queryAlterarDados = """
+                    UPDATE degustadores SET 
+                    Nome_deg = '%s',
+                    Dt_Contrato_deg = '%d-%d-%d',
+                    Salario_deg = %s
+                    WHERE Cpf_deg = %s
+                    """.formatted(
+                            novo.getNome(),
+                            ano,
+                            mes,
+                            dia,
+                            salarioFormatado,
+                            novo.getCpf()
+                    );
+        }
+        else if (novo instanceof Editor) {
+            
+            queryAlterarDados = """
+                    UPDATE editores SET 
+                    Nome_Edit = '%s',
+                    Dt_Contrato_Edit = '%d-%d-%d',
+                    Salario_Edit = %s
+                    WHERE Cpf_Edit = %s
+                    """.formatted(
+                            novo.getNome(),
+                            ano,
+                            mes,
+                            dia,
+                            salarioFormatado,
+                            novo.getCpf()
+                    );
+        }
+        
+        System.out.println(queryAlterarDados);
+        comando.execute(queryAlterarDados);
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+    }
+    
+    
+    
+    
+    
     
     
     public String getUsuario() {

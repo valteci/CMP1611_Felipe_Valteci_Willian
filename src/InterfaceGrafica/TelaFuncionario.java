@@ -425,6 +425,11 @@ public class TelaFuncionario extends javax.swing.JFrame {
                 TelaFuncionario.this.mouseReleased(evt);
             }
         });
+        bt_atualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_atualizarActionPerformed(evt);
+            }
+        });
         jPanel3.add(bt_atualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 400, 30));
         botoes.add(bt_atualizar);
 
@@ -743,7 +748,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
             
             JOptionPane.showMessageDialog(
                     rootPane, 
-                    "Funcionário deletado com sucesso!",
+                    "Funcionário cadastrado com sucesso!",
                     "SUCESSO",
                     JOptionPane.INFORMATION_MESSAGE
             );
@@ -756,11 +761,83 @@ public class TelaFuncionario extends javax.swing.JFrame {
                     e.getMessage(),
                     "ERRO",
                     JOptionPane.ERROR_MESSAGE
-            );            
+            );
         }
         
         
     }//GEN-LAST:event_bt_cadastrarActionPerformed
+
+    private void bt_atualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_atualizarActionPerformed
+        try {
+            
+            String cpf = txt_cpfFuncionarioAserAtualizado.getText();
+            
+            if (! Funcionario.eCPFvalido(cpf))
+                throw new Exception("CPF inválido");
+            
+            BancoDeDados banco = BancoDeDados.getInstance(
+                    usuario,
+                    senha,
+                    nomedb
+            );
+            
+            Funcionario funcionario = banco.getFuncionarioCPF(cpf);
+            
+            if (ckb_atualizarCPF.isSelected()) {
+                if (! Funcionario.eCPFvalido(txt_novoCPF.getText()))
+                    throw new Exception("Novo CPF é inválido");
+                    
+                funcionario.setCpf(txt_novoCPF.getText());
+            }
+            
+            if (ckb_atualizarNome.isSelected()) 
+                funcionario.setNome(txt_novoNome.getText());
+            
+            if (ckb_atualizarSalario.isSelected()) 
+                funcionario.setSalario(
+                        Float.parseFloat(txt_novoSalario.getText())
+                );
+            
+            if (funcionario instanceof Cozinheiro cozinheiro &&
+                ckb_atualizarNomeFantasia.isSelected()) {
+                
+                cozinheiro.setNomeFantasia(
+                        txt_novoNomeFantasia.getText()
+                );                                
+            }
+            
+            if (ckb_atualizarDataIngresso.isSelected()) {
+                
+                SimpleDateFormat dataFormato = new SimpleDateFormat(
+                    "dd/MM/yyyy"
+                );
+            
+                Date dataIngresso = dataFormato.parse(
+                        txt_novaDataIngresso.getText()
+                );
+                
+                funcionario.setDataIngresso(dataIngresso);
+            }
+            
+            banco.atualizarFuncionario(funcionario, cpf);
+            
+            JOptionPane.showMessageDialog(
+                    rootPane, 
+                    "Funcionário atualizado com sucesso!",
+                    "SUCESSO",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            
+        } catch(Exception e) {
+            
+            JOptionPane.showMessageDialog(
+                    rootPane,
+                    e.getMessage(),
+                    "ERRO",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }//GEN-LAST:event_bt_atualizarActionPerformed
 
     /**
      * @param args the command line arguments

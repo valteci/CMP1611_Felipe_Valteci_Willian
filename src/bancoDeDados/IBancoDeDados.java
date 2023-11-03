@@ -26,6 +26,11 @@ public interface IBancoDeDados {
             String nomeFantasia,
             Cargo.tipo cargo
     ) throws Exception;
+    
+    public void atualizarFuncionario(
+            Funcionario novo,
+            String cpfOriginal
+    ) throws Exception;
 }
 
 
