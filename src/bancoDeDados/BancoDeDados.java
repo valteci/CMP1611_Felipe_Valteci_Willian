@@ -1222,6 +1222,123 @@ public class BancoDeDados implements IBancoDeDados {
         return resultado;
     }
     
+    @Override
+    public Ingrediente getIngredienteCodigo(int codigo) throws Exception {
+        String url = getUrl();
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        ResultSet resultadoConsulta;
+        
+        resultadoConsulta = comando.executeQuery(
+                "select * from ingrediente where cod_ingrediente = " +
+                codigo
+        );
+        
+        if (! resultadoConsulta.next())
+            throw new Exception(
+                    "Restaurante não existe ou código inválido"
+            );
+                                
+            
+            String nome = resultadoConsulta.getString("Nome_Ingrediente");
+            Ingrediente ingrediente = new Ingrediente(
+                    codigo,
+                    nome
+            );
+            
+            if (resultadoConsulta != null)
+                resultadoConsulta.close();
+        
+            if (comando != null)
+                comando.close();
+
+            if (conexao != null)
+                conexao.close();
+        
+            return ingrediente;
+    }
+    
+    @Override
+    public void inserirIngrediente(String nome) throws Exception {
+        
+        String url = getUrl();
+        String query = "INSERT INTO ingrediente (Nome_Ingrediente) VALUES " +
+                       "('"+ nome +"')";
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        comando.execute(query);
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+    }
+    
+    @Override
+    public void deletarIngrediente(int codigo) throws Exception {
+        
+        String url = getUrl();
+        String query = "DELETE FROM ingrediente WHERE cod_ingrediente = " +
+                codigo;
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        comando.execute(query);
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+    }
+    
+    
+    @Override
+    public void atualizarIngrediente(int codigo, String novoNome) throws Exception {
+        
+        String url = getUrl();
+        String query = "UPDATE ingrediente SET nome_ingrediente = '"+
+                       novoNome + "' WHERE cod_ingrediente = " + codigo;
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        comando.execute(query);
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+    }
     
     
     public String getUsuario() {

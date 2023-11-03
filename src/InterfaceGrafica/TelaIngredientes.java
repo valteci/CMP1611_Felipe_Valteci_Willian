@@ -144,6 +144,11 @@ public class TelaIngredientes extends javax.swing.JFrame {
                 TelaIngredientes.this.mouseReleased(evt);
             }
         });
+        bt_cadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_cadastrarActionPerformed(evt);
+            }
+        });
         jPanel1.add(bt_cadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 290, 30));
         botoes.add(bt_cadastrar);
 
@@ -166,6 +171,11 @@ public class TelaIngredientes extends javax.swing.JFrame {
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 TelaIngredientes.this.mouseReleased(evt);
+            }
+        });
+        bt_deletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_deletarActionPerformed(evt);
             }
         });
         jPanel2.add(bt_deletar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 290, 30));
@@ -195,6 +205,11 @@ public class TelaIngredientes extends javax.swing.JFrame {
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 TelaIngredientes.this.mouseReleased(evt);
+            }
+        });
+        bt_atualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_atualizarActionPerformed(evt);
             }
         });
         jPanel3.add(bt_atualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 290, 30));
@@ -259,6 +274,11 @@ public class TelaIngredientes extends javax.swing.JFrame {
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 TelaIngredientes.this.mouseReleased(evt);
+            }
+        });
+        bt_procurarCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_procurarCodigoActionPerformed(evt);
             }
         });
         jPanel4.add(bt_procurarCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, 170, 30));
@@ -340,6 +360,146 @@ public class TelaIngredientes extends javax.swing.JFrame {
             );
         }
     }//GEN-LAST:event_bt_listarTodosActionPerformed
+
+    private void bt_procurarCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_procurarCodigoActionPerformed
+        
+        try {
+            
+            String codigo_str = JOptionPane.showInputDialog(
+                    this,
+                    "Digite o código do ingrediente:"
+            );
+            
+            if (codigo_str == null || codigo_str.equals(""))
+                return;
+            
+            if (! codigo_str.matches("\\d+"))
+                throw new Exception("Erro: código inválido");
+            
+            int codigo = Integer.parseInt(codigo_str);
+            
+            BancoDeDados banco = BancoDeDados.getInstance(
+                    usuario,
+                    senha,
+          nomedb
+            );
+            
+            Ingrediente ingrediente = banco.getIngredienteCodigo(codigo);
+            var ingredientes = new ArrayList<Ingrediente>();
+            ingredientes.add(ingrediente);
+            mostrarIngredientes(ingredientes);
+                                    
+        } catch(Exception e) {
+            
+            JOptionPane.showMessageDialog(
+                    rootPane,
+                    e.getMessage(),
+                    "ERRO",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }//GEN-LAST:event_bt_procurarCodigoActionPerformed
+
+    private void bt_cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cadastrarActionPerformed
+        
+        try {
+            String nome = txt_cadastrarNome.getText();
+            
+            BancoDeDados banco = BancoDeDados.getInstance(
+                    usuario,
+                    senha,
+                    nomedb
+            );
+            
+            banco.inserirIngrediente(nome);
+            
+            JOptionPane.showMessageDialog(
+                    rootPane, 
+                    "Ingrediente Cadastrado com sucesso!",
+                    "SUCESSO",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            
+            
+        } catch(Exception e) {
+            
+            JOptionPane.showMessageDialog(
+                    rootPane,
+                    e.getMessage(),
+                    "ERRO",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }//GEN-LAST:event_bt_cadastrarActionPerformed
+
+    private void bt_deletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_deletarActionPerformed
+        
+        try {
+            
+            int codigo = Integer.parseInt(txt_deletarCodigo.getText());
+            
+            BancoDeDados banco = BancoDeDados.getInstance(
+                    usuario,
+                    senha,
+                    nomedb
+            );
+            
+            
+            banco.getIngredienteCodigo(codigo);
+            banco.deletarIngrediente(codigo);
+            
+            JOptionPane.showMessageDialog(
+                    rootPane, 
+                    "Ingrediente deletado com sucesso!",
+                    "SUCESSO",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            
+        } catch(Exception e) {
+            
+            JOptionPane.showMessageDialog(
+                    rootPane,
+                    e.getMessage(),
+                    "ERRO",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }//GEN-LAST:event_bt_deletarActionPerformed
+
+    private void bt_atualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_atualizarActionPerformed
+        
+        try {
+            
+            int codigo = Integer.parseInt(txt_atualizarCodigo.getText());
+            String novoNome = txt_novoNome.getText();
+            
+            BancoDeDados banco = BancoDeDados.getInstance(
+                    usuario,
+                    senha,
+                    nomedb
+            );
+            
+            banco.getIngredienteCodigo(codigo);
+            banco.atualizarIngrediente(codigo, novoNome);
+            
+            
+            JOptionPane.showMessageDialog(
+                    rootPane, 
+                    "Ingrediente atualizado com sucesso!",
+                    "SUCESSO",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            
+        } catch(Exception e) {
+            
+            JOptionPane.showMessageDialog(
+                    rootPane,
+                    e.getMessage(),
+                    "ERRO",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }//GEN-LAST:event_bt_atualizarActionPerformed
 
     /**
      * @param args the command line arguments
