@@ -327,7 +327,37 @@ public class TelaCategoria extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bt_deletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_deletarActionPerformed
-        // TODO add your handling code here:
+        
+        try {
+            
+            int codigo = Integer.parseInt(txt_deletarCodigo.getText());
+            
+            BancoDeDados banco = BancoDeDados.getInstance(
+                    usuario,
+                    senha,
+                    nomedb
+            );
+            
+            
+            banco.getCategoriaCodigo(codigo);
+            banco.deletarCategoria(codigo);
+            
+            JOptionPane.showMessageDialog(
+                    rootPane, 
+                    "Categoria deletada com sucesso!",
+                    "SUCESSO",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            
+        } catch(Exception e) {
+            
+            JOptionPane.showMessageDialog(
+                    rootPane,
+                    e.getMessage(),
+                    "ERRO",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_bt_deletarActionPerformed
 
     private void bt_listarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_listarTodosActionPerformed

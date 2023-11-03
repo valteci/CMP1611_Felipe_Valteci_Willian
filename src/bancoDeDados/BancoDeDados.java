@@ -4,6 +4,7 @@
  */
 package bancoDeDados;
 
+import Livros.Livro;
 import categoria.Categoria;
 import funcionarios.Cargo;
 import funcionarios.Cozinheiro;
@@ -954,6 +955,218 @@ public class BancoDeDados implements IBancoDeDados {
         if (conexao != null) {
             conexao.close();
         }
+    }
+    
+    @Override
+    public void deletarCategoria(int codigo) throws Exception {
+        
+        String url = getUrl();
+        String query = "DELETE FROM categoria_receita WHERE Cod_Cat_Rec = " +
+                codigo;
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        comando.execute(query);
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+    }
+    
+    @Override
+    public void inserirLivro(String ISBN, String titulo, String cpfEditor
+    ) throws Exception {
+        
+        String url = getUrl();
+        String query = "INSERT INTO livros (ISBN, Titulo, Cpf_Edit) VALUES (" +
+                       ISBN + ", '" + titulo +"', " + cpfEditor + ")";
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        comando.execute(query);
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+    }
+    
+    @Override
+    public ArrayList<Livro> getLivros() throws Exception {
+        
+        ArrayList<Livro> resultado = new ArrayList<>();
+        
+        String url = getUrl();
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        ResultSet resultadoConsulta;
+        
+        resultadoConsulta = comando.executeQuery(
+                "SELECT * FROM Livros"
+        );
+        
+        
+        
+        while (resultadoConsulta.next()) {
+            
+            String ISBN = resultadoConsulta.getString(
+                    "ISBN"
+            );
+            
+            String titulo = resultadoConsulta.getString(
+                    "Titulo"
+            );
+            
+            String cpfEditor = resultadoConsulta.getString(
+                    "Cpf_Edit"
+            );
+            
+            
+            Livro livro = new Livro(
+                    ISBN,
+                    titulo,
+                    cpfEditor
+            );
+            
+            resultado.add(livro);
+        }
+        
+        
+        if (resultadoConsulta != null)
+            resultadoConsulta.close();
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+        
+        return resultado;
+        
+    }
+    
+    
+    @Override
+    public Livro getLivroISBN(String ISBN) throws Exception {
+        
+        String url = getUrl();
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        ResultSet resultadoConsulta;
+        
+        resultadoConsulta = comando.executeQuery(
+                "select * from livros WHERE ISBN = " + ISBN
+        );
+        
+        if (! resultadoConsulta.next())
+            throw new Exception(
+                    "ISBN não existe ou ISBN inválido"
+            );
+                                
+            
+            String titulo = resultadoConsulta.getString("Titulo");
+            String cpfEditor = resultadoConsulta.getString("Cpf_Edit");
+            
+            Livro livro = new Livro(
+                    ISBN,
+                    titulo,
+                    cpfEditor
+            );
+            
+            if (resultadoConsulta != null)
+                resultadoConsulta.close();
+        
+            if (comando != null)
+                comando.close();
+
+            if (conexao != null)
+                conexao.close();
+        
+            return livro;
+        
+    }
+    
+    @Override
+    public void deletarLivro(String ISBN) throws Exception {
+        String url = getUrl();
+        String query = "DELETE FROM livros WHERE ISBN = " + ISBN;
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        comando.execute(query);
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+    }
+    
+    
+    @Override
+    public void atualizarLivro(Livro livro, String ISBNoriginal) throws Exception {
+        
+        String url = getUrl();
+        String query = "UPDATE livros SET ISBN = " + livro.getISBN() + ", " +
+                       "Titulo = '" + livro.getTitulo() + "', Cpf_Edit = " +
+                       livro.getCpfEditor() + " WHERE ISBN = " + ISBNoriginal;
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        comando.execute(query);
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+        
+        
     }
     
     public String getUsuario() {

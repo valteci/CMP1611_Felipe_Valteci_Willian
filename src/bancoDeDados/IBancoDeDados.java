@@ -4,6 +4,7 @@
  */
 package bancoDeDados;
 
+import Livros.Livro;
 import categoria.Categoria;
 import funcionarios.Funcionario;
 import java.util.ArrayList;
@@ -31,7 +32,14 @@ public interface IBancoDeDados {
     public Categoria getCategoriaCodigo(int codigo) throws Exception;
     public void inserirCategoria(String descricao) throws Exception;
     public void atualizarCategoria(int codigo, String novaDescricao) throws Exception;
+    public void deletarCategoria(int codigo) throws Exception;
     
+    
+    public void inserirLivro(String ISBN, String titulo, String cpfEditor) throws Exception;
+    public ArrayList<Livro> getLivros() throws Exception;
+    public Livro getLivroISBN(String ISBN) throws Exception;
+    public void deletarLivro(String ISBN) throws Exception;
+    public void atualizarLivro(Livro livro, String ISBNoriginal) throws Exception;
     
     public void inserirFuncionario(
             String cpf,
