@@ -1,0 +1,114 @@
+-- Tabela Profissionais Superentidade
+CREATE TABLE Profissionais (
+    Cpf_Profissional BIGINT PRIMARY KEY
+);
+-- Tabela Cozinheiros (referencia a tabela Pessoas)
+CREATE TABLE Cozinheiros (
+    Nome_Coz VARCHAR(80) NOT NULL UNIQUE,
+    Nome_Fantasia VARCHAR(80) NOT NULL,
+    Dt_Contrato_Coz DATE NOT NULL,
+    Salario_Coz NUMERIC(8, 2),
+    Cpf_Coz BIGINT PRIMARY KEY,
+	FOREIGN KEY(cpf_coz) REFERENCES Profissionais(cpf_profissional) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Tabela Degustadores (referencia a tabela Pessoas)
+CREATE TABLE Degustadores (
+    Nome_Deg VARCHAR(80) NOT NULL UNIQUE,
+    Dt_Contrato_Deg DATE NOT NULL,
+    Salario_Deg NUMERIC(8, 2),
+    Cpf_Deg BIGINT PRIMARY KEY,
+	FOREIGN KEY(Cpf_Deg) REFERENCES Profissionais(cpf_profissional) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Tabela Editores (referencia a tabela Pessoas)
+CREATE TABLE Editores (
+    Nome_Edit VARCHAR(80) NOT NULL UNIQUE,
+    Dt_Contrato_Edit DATE NOT NULL,
+    Salario_Edit NUMERIC(8, 2),
+    Cpf_Edit BIGINT PRIMARY KEY,
+	FOREIGN KEY(Cpf_Edit) REFERENCES Profissionais(cpf_profissional) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Tabela Livros
+CREATE TABLE Livros (
+    ISBN INT PRIMARY KEY,  -- Defina a coluna ISBN como chave primária
+    Titulo VARCHAR(200) NOT NULL,
+    Cpf_Edit BIGINT NOT NULL,
+    FOREIGN KEY(Cpf_Edit) REFERENCES Editores(Cpf_Edit) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Tabela Categoria
+CREATE TABLE Categoria_Receita (
+    Cod_Cat_Rec SERIAL PRIMARY KEY,
+    Desc_Cat_Rec VARCHAR(40) NOT NULL
+);
+
+-- Tabela Receitas
+CREATE TABLE Receitas (
+    Cod_Receita SERIAL PRIMARY KEY,
+    Nome_Receita VARCHAR(80) NOT NULL,
+    Nome_Coz VARCHAR(80) REFERENCES Cozinheiros(Nome_Coz) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
+    Data_Criacao DATE NOT NULL,
+    Cpf_Coz BIGINT REFERENCES Cozinheiros(Cpf_Coz) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
+    Cod_Cat_Rec INT REFERENCES Categoria_Receita(Cod_Cat_Rec) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL
+);
+
+-- Tabela Restaurantes
+CREATE TABLE Restaurantes (
+    Nome_Restaurante VARCHAR(80) NOT NULL,
+    Cod_Restaurante INT PRIMARY KEY
+);
+
+-- Tabela Ingrediente
+CREATE TABLE Ingrediente (
+    Cod_Ingrediente SERIAL PRIMARY KEY,
+    Nome_Ingrediente VARCHAR(40) NOT NULL
+);
+
+-- Tabela Ingredientes_Receita
+CREATE TABLE Ingredientes_Receita (
+    Cod_Receita INT REFERENCES Receitas(Cod_Receita) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
+    Cod_Ingrediente INT REFERENCES Ingrediente(Cod_Ingrediente) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
+    Quant_Ingrediente NUMERIC(4, 2) NOT NULL,
+    Medida VARCHAR(10) NOT NULL,
+    PRIMARY KEY (Cod_Receita, Cod_Ingrediente)
+);
+
+
+-- Relacoes
+
+-- Tabela Testa
+CREATE TABLE Testa (
+    Cpf_Deg_Test BIGINT REFERENCES Degustadores(Cpf_Deg),
+    Cod_Rec_Test INT REFERENCES Receitas(Cod_Receita),
+    Dt_Teste DATE NOT NULL,
+    Nota_Teste NUMERIC(8, 2) NOT NULL,
+    PRIMARY KEY (Cpf_Deg_Test, Cod_Rec_Test)
+);
+
+-- Tabela Inclui
+CREATE TABLE Inclui (
+    Cod_Receita INT REFERENCES Receitas(Cod_Receita) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
+    ISBN INT REFERENCES Livros(ISBN) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
+    PRIMARY KEY (Cod_Receita,ISBN)
+);
+
+
+-- Tabela Possui
+CREATE TABLE Possui (
+    Cod_Receita INT REFERENCES Receitas(Cod_Receita) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
+    Cod_Ingrediente INT REFERENCES Ingrediente(Cod_Ingrediente) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
+    PRIMARY KEY (Cod_Receita, Cod_Ingrediente)
+);
+
+
+-- Tabela Curriculo
+CREATE TABLE Curriculo (
+    Cpf_Coz BIGINT,
+    Cod_Restaurante INT,
+    Dt_Contrato_Coz DATE NOT NULL,
+    PRIMARY KEY(Cpf_Coz, Cod_Restaurante),
+    FOREIGN KEY(Cpf_Coz) REFERENCES Cozinheiros(Cpf_Coz) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY(Cod_Restaurante) REFERENCES Restaurantes(Cod_Restaurante) ON DELETE CASCADE ON UPDATE CASCADE
+);

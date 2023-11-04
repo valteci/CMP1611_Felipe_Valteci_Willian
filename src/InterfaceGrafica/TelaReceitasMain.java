@@ -60,6 +60,7 @@ public class TelaReceitasMain extends javax.swing.JFrame {
     private void configurarCores() {
         jPanelFundo.setBackground(PaletaCores.FUNDO);
         jPanelTitulo.setBackground(PaletaCores.FUNDO);
+        jTable_consulta.setBackground(PaletaCores.FUNDO);
         
         for (var label : labels)
             label.setForeground(PaletaCores.TEXTO_FONTE);
@@ -95,6 +96,9 @@ public class TelaReceitasMain extends javax.swing.JFrame {
         bt_procurarCodigo = new javax.swing.JButton();
         bt_listarTodos = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        bt_listarTodos1 = new javax.swing.JButton();
+        bt_listarTodos2 = new javax.swing.JButton();
+        bt_listarTodos3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -159,6 +163,14 @@ public class TelaReceitasMain extends javax.swing.JFrame {
 
         bt_procurarCodigo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         bt_procurarCodigo.setText("Procurar por Código");
+        bt_procurarCodigo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                TelaReceitasMain.this.mousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                TelaReceitasMain.this.mouseReleased(evt);
+            }
+        });
         bt_procurarCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_procurarCodigoActionPerformed(evt);
@@ -169,12 +181,20 @@ public class TelaReceitasMain extends javax.swing.JFrame {
 
         bt_listarTodos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         bt_listarTodos.setText("Listar Todos");
+        bt_listarTodos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                TelaReceitasMain.this.mousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                TelaReceitasMain.this.mouseReleased(evt);
+            }
+        });
         bt_listarTodos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_listarTodosActionPerformed(evt);
             }
         });
-        jPanel1.add(bt_listarTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 210, 40));
+        jPanel1.add(bt_listarTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, 40));
         botoes.add(bt_listarTodos);
 
         jPanelFundo.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 1080, 250));
@@ -184,6 +204,60 @@ public class TelaReceitasMain extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("visão geral");
         jPanelFundo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, 220, 30));
+
+        bt_listarTodos1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_listarTodos1.setText("Verificar em quais livros uma receita está");
+        bt_listarTodos1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                TelaReceitasMain.this.mousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                TelaReceitasMain.this.mouseReleased(evt);
+            }
+        });
+        bt_listarTodos1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_listarTodos1ActionPerformed(evt);
+            }
+        });
+        jPanelFundo.add(bt_listarTodos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 430, 350, 40));
+        botoes.add(bt_listarTodos1);
+
+        bt_listarTodos2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_listarTodos2.setText("Criar Receita");
+        bt_listarTodos2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                TelaReceitasMain.this.mousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                TelaReceitasMain.this.mouseReleased(evt);
+            }
+        });
+        bt_listarTodos2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_listarTodos2ActionPerformed(evt);
+            }
+        });
+        jPanelFundo.add(bt_listarTodos2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 430, 210, 40));
+        botoes.add(bt_listarTodos2);
+
+        bt_listarTodos3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_listarTodos3.setText("Testar Receita");
+        bt_listarTodos3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                TelaReceitasMain.this.mousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                TelaReceitasMain.this.mouseReleased(evt);
+            }
+        });
+        bt_listarTodos3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_listarTodos3ActionPerformed(evt);
+            }
+        });
+        jPanelFundo.add(bt_listarTodos3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 430, 210, 40));
+        botoes.add(bt_listarTodos3);
 
         getContentPane().add(jPanelFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1120, 570));
 
@@ -254,6 +328,30 @@ public class TelaReceitasMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bt_procurarCodigoActionPerformed
 
+    private void mousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mousePressed
+        
+        JButton botao = (JButton) evt.getSource();
+        botao.setBackground(PaletaCores.BOTAO_ENTER);
+    }//GEN-LAST:event_mousePressed
+
+    private void mouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseReleased
+        
+        JButton botao = (JButton) evt.getSource();
+        botao.setBackground(PaletaCores.BOTAO);
+    }//GEN-LAST:event_mouseReleased
+
+    private void bt_listarTodos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_listarTodos1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bt_listarTodos1ActionPerformed
+
+    private void bt_listarTodos2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_listarTodos2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bt_listarTodos2ActionPerformed
+
+    private void bt_listarTodos3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_listarTodos3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bt_listarTodos3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -291,6 +389,9 @@ public class TelaReceitasMain extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_listarTodos;
+    private javax.swing.JButton bt_listarTodos1;
+    private javax.swing.JButton bt_listarTodos2;
+    private javax.swing.JButton bt_listarTodos3;
     private javax.swing.JButton bt_procurarCodigo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
