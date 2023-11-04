@@ -97,10 +97,9 @@ public class TelaReceitasMain extends javax.swing.JFrame {
         bt_listarTodos = new javax.swing.JButton();
         bt_deletar = new javax.swing.JButton();
         bt_verIngredientes = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        bt_listarTodos1 = new javax.swing.JButton();
-        bt_listarTodos2 = new javax.swing.JButton();
         bt_listarTodos3 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        bt_listarTodos2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -161,7 +160,7 @@ public class TelaReceitasMain extends javax.swing.JFrame {
                 bt_procurarCodigoActionPerformed(evt);
             }
         });
-        jPanel1.add(bt_procurarCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, 210, 40));
+        jPanel1.add(bt_procurarCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 190, 40));
         botoes.add(bt_procurarCodigo);
 
         bt_listarTodos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -179,7 +178,7 @@ public class TelaReceitasMain extends javax.swing.JFrame {
                 bt_listarTodosActionPerformed(evt);
             }
         });
-        jPanel1.add(bt_listarTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, 40));
+        jPanel1.add(bt_listarTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 130, 40));
         botoes.add(bt_listarTodos);
 
         bt_deletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -197,7 +196,7 @@ public class TelaReceitasMain extends javax.swing.JFrame {
                 bt_deletarActionPerformed(evt);
             }
         });
-        jPanel1.add(bt_deletar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 10, 260, 40));
+        jPanel1.add(bt_deletar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 10, 160, 40));
         botoes.add(bt_deletar);
 
         bt_verIngredientes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -215,8 +214,26 @@ public class TelaReceitasMain extends javax.swing.JFrame {
                 bt_verIngredientesActionPerformed(evt);
             }
         });
-        jPanel1.add(bt_verIngredientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 10, 260, 40));
+        jPanel1.add(bt_verIngredientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 240, 40));
         botoes.add(bt_verIngredientes);
+
+        bt_listarTodos3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_listarTodos3.setText("Ver lista de degustadores");
+        bt_listarTodos3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                TelaReceitasMain.this.mousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                TelaReceitasMain.this.mouseReleased(evt);
+            }
+        });
+        bt_listarTodos3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_listarTodos3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bt_listarTodos3, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 10, 240, 40));
+        botoes.add(bt_listarTodos3);
 
         jPanelFundo.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 1080, 250));
         panels.add(jPanel1);
@@ -225,24 +242,6 @@ public class TelaReceitasMain extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("visão geral");
         jPanelFundo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, 220, 30));
-
-        bt_listarTodos1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        bt_listarTodos1.setText("Verificar em quais livros uma receita está");
-        bt_listarTodos1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                TelaReceitasMain.this.mousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                TelaReceitasMain.this.mouseReleased(evt);
-            }
-        });
-        bt_listarTodos1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_listarTodos1ActionPerformed(evt);
-            }
-        });
-        jPanelFundo.add(bt_listarTodos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 430, 350, 40));
-        botoes.add(bt_listarTodos1);
 
         bt_listarTodos2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         bt_listarTodos2.setText("Criar Receita");
@@ -259,26 +258,8 @@ public class TelaReceitasMain extends javax.swing.JFrame {
                 bt_listarTodos2ActionPerformed(evt);
             }
         });
-        jPanelFundo.add(bt_listarTodos2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 430, 210, 40));
+        jPanelFundo.add(bt_listarTodos2, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 490, 210, 40));
         botoes.add(bt_listarTodos2);
-
-        bt_listarTodos3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        bt_listarTodos3.setText("Testar Receita");
-        bt_listarTodos3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                TelaReceitasMain.this.mousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                TelaReceitasMain.this.mouseReleased(evt);
-            }
-        });
-        bt_listarTodos3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_listarTodos3ActionPerformed(evt);
-            }
-        });
-        jPanelFundo.add(bt_listarTodos3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 430, 210, 40));
-        botoes.add(bt_listarTodos3);
 
         getContentPane().add(jPanelFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1120, 570));
 
@@ -361,16 +342,24 @@ public class TelaReceitasMain extends javax.swing.JFrame {
         botao.setBackground(PaletaCores.BOTAO);
     }//GEN-LAST:event_mouseReleased
 
-    private void bt_listarTodos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_listarTodos1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bt_listarTodos1ActionPerformed
-
     private void bt_listarTodos2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_listarTodos2ActionPerformed
         TelaReceitaCriar.main(null);
     }//GEN-LAST:event_bt_listarTodos2ActionPerformed
 
     private void bt_listarTodos3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_listarTodos3ActionPerformed
-        // TODO add your handling code here:
+        
+        int codigoReceita = -1;
+        
+        int linhaSelecionada = jTable_consulta.getSelectedRow();
+        
+        DefaultTableModel model = (DefaultTableModel) 
+                                   jTable_consulta.getModel();
+        
+        codigoReceita = Integer.parseInt(
+                model.getValueAt(linhaSelecionada, 0).toString()
+        );
+        
+        TelaVerDegustadoresReceita.main(codigoReceita);
     }//GEN-LAST:event_bt_listarTodos3ActionPerformed
 
     private void bt_verIngredientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_verIngredientesActionPerformed
@@ -482,7 +471,6 @@ public class TelaReceitasMain extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_deletar;
     private javax.swing.JButton bt_listarTodos;
-    private javax.swing.JButton bt_listarTodos1;
     private javax.swing.JButton bt_listarTodos2;
     private javax.swing.JButton bt_listarTodos3;
     private javax.swing.JButton bt_procurarCodigo;

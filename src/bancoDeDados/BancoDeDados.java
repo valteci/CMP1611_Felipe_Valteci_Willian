@@ -1675,8 +1675,69 @@ public class BancoDeDados implements IBancoDeDados {
         if (conexao != null) {
             conexao.close();
         }
-        
     }
+    
+    @Override    
+    public ArrayList<ArrayList<Object>> getDegustadoresReceita(int codigoReceita) throws Exception {
+        
+        String url = getUrl();
+        String query = """
+                       select nome_deg, dt_teste, nota_teste from (select * 
+                       from testa inner join degustadores on cpf_deg_test = 
+                       cpf_deg where cod_rec_test = %d) inner join receitas on 
+                       cod_rec_test = cod_receita;
+                       """.formatted(codigoReceita);
+        
+        ArrayList<ArrayList<Object>> resultado = new 
+                                                ArrayList<ArrayList<Object>>();
+        
+        
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        ResultSet resultadoConsulta;
+                
+        resultadoConsulta = comando.executeQuery(query);
+        
+        while (resultadoConsulta.next()) {
+            
+            String nome = resultadoConsulta.getString(
+                    "nome_deg"
+            );
+            
+            Date data = resultadoConsulta.getDate(
+                    "dt_teste"
+            );
+            
+            int nota = resultadoConsulta.getInt(
+                    "nota_teste"
+            );
+            
+            ArrayList<Object> itens = new ArrayList<Object>();
+            itens.add(nome);
+            itens.add(data);
+            itens.add(nota);
+            
+            resultado.add(itens);
+        }
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+        
+        return resultado;
+    }
+        
+    
     
     
     public String getUsuario() {

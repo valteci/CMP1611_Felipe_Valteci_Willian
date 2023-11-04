@@ -65,7 +65,7 @@ public class TelaReceitaCriar extends javax.swing.JFrame {
         
         for (var degustacao : degustacoes) {
                 
-            String dataTeste = dataFormato.format(degustacao.get(1));            
+            String dataTeste = dataFormato.format(degustacao.get(1));
             
             model.addRow(new Object[]{
                     degustacao.get(0),

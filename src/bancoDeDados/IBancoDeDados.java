@@ -63,6 +63,7 @@ public interface IBancoDeDados {
     public ArrayList<ArrayList<Object>> getIngredientesReceita(int codigoReceita) throws Exception;
     public void deletarReceita(int codigo) throws Exception;
     public void inserirDegustacoes(ArrayList<ArrayList<Object>> degustacoes, int codigoReceita) throws Exception;
+    public ArrayList<ArrayList<Object>> getDegustadoresReceita(int codigoReceita) throws Exception;
     
     public void inserirFuncionario(
             String cpf,
