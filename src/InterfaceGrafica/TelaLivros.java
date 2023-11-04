@@ -5,6 +5,7 @@
 package InterfaceGrafica;
 
 import Livros.Livro;
+import Receita.IngredienteReceita;
 import bancoDeDados.BancoDeDados;
 import java.util.ArrayList;
 import javax.swing.JButton;
@@ -24,6 +25,8 @@ public class TelaLivros extends javax.swing.JFrame {
     ArrayList<JButton> botoes;
     ArrayList<JLabel> labels;
     ArrayList<JPanel> panels;
+    ArrayList<Integer> receitas;
+    
     String usuario = "postgres";
     String senha = "1Z2ht6b.";
     String nomedb = "CMP1611_Felipe_Valteci_Willian";
@@ -33,10 +36,26 @@ public class TelaLivros extends javax.swing.JFrame {
         botoes = new ArrayList<>();
         labels = new ArrayList<>();
         panels = new ArrayList<>();
+        receitas = new ArrayList<>();
         
         initComponents();
         configurarTela();
         configurarCores();
+    }
+    
+    private void mostrarReceitas() {
+        
+        DefaultTableModel model = (DefaultTableModel) 
+                                   jTableReceitas.getModel();
+        
+        while (model.getRowCount()> 0)
+            model.removeRow(0);
+        
+        for (Integer codigo : receitas) {
+                model.addRow(new Object[]{
+                    codigo
+                });
+        }
     }
     
     private void mostrarLivros(ArrayList<Livro> livros) {
@@ -113,6 +132,7 @@ public class TelaLivros extends javax.swing.JFrame {
         jTable_consulta = new javax.swing.JTable();
         bt_listarTodos = new javax.swing.JButton();
         bt_listarISBN = new javax.swing.JButton();
+        bt_verReceitas = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         txt_ISBNatualizar = new javax.swing.JTextField();
@@ -127,8 +147,17 @@ public class TelaLivros extends javax.swing.JFrame {
         txt_novoCPFeditor = new javax.swing.JTextField();
         bt_atualizar = new javax.swing.JButton();
         bt_autalizar = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableReceitas = new javax.swing.JTable();
+        jLabel12 = new javax.swing.JLabel();
+        txt_codigoReceita = new javax.swing.JTextField();
+        bt_limparReceita = new javax.swing.JButton();
+        bt_adicionarReceita = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -142,7 +171,7 @@ public class TelaLivros extends javax.swing.JFrame {
         jLabel1.setText("LIVROS DE RECEITA");
         jPanelTitulo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, 440, -1));
 
-        jPanelFundo.add(jPanelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1180, 80));
+        jPanelFundo.add(jPanelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1220, 80));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(PaletaCores.PANEL_BORDA, 3));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -180,12 +209,12 @@ public class TelaLivros extends javax.swing.JFrame {
         jPanel3.add(bt_cadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 240, 30));
         botoes.add(bt_cadastrar);
 
-        jPanelFundo.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 380, 200));
+        jPanelFundo.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 380, 220));
         panels.add(jPanel3);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Deletar Livro");
-        jPanelFundo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, -1, -1));
+        jPanelFundo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, -1, -1));
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(PaletaCores.PANEL_BORDA, 3));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -210,10 +239,10 @@ public class TelaLivros extends javax.swing.JFrame {
                 bt_deletarActionPerformed(evt);
             }
         });
-        jPanel4.add(bt_deletar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 240, 30));
+        jPanel4.add(bt_deletar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 240, 30));
         botoes.add(bt_deletar);
 
-        jPanelFundo.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 380, 120));
+        jPanelFundo.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, 380, 190));
         panels.add(jPanel4);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -264,7 +293,7 @@ public class TelaLivros extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable_consulta);
 
-        jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 380, 150));
+        jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 410, 130));
 
         bt_listarTodos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         bt_listarTodos.setText("Listar Todos");
@@ -281,7 +310,7 @@ public class TelaLivros extends javax.swing.JFrame {
                 bt_listarTodosActionPerformed(evt);
             }
         });
-        jPanel5.add(bt_listarTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 180, 30));
+        jPanel5.add(bt_listarTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 120, 30));
         botoes.add(bt_listarTodos);
 
         bt_listarISBN.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -299,10 +328,20 @@ public class TelaLivros extends javax.swing.JFrame {
                 bt_listarISBNActionPerformed(evt);
             }
         });
-        jPanel5.add(bt_listarISBN, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 160, 30));
+        jPanel5.add(bt_listarISBN, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 140, 30));
         botoes.add(bt_listarISBN);
 
-        jPanelFundo.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 120, 430, 240));
+        bt_verReceitas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_verReceitas.setText("Ver Receitas");
+        bt_verReceitas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_verReceitasActionPerformed(evt);
+            }
+        });
+        jPanel5.add(bt_verReceitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, 120, 30));
+        botoes.add(bt_verReceitas);
+
+        jPanelFundo.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 130, 430, 220));
         panels.add(jPanel5);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(PaletaCores.PANEL_BORDA, 3));
@@ -395,15 +434,99 @@ public class TelaLivros extends javax.swing.JFrame {
         jPanelFundo.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 390, 690, 190));
         panels.add(jPanel6);
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel9.setText("Listar Livros");
-        jPanelFundo.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 100, -1, -1));
-
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("Atualizar Livros");
         jPanelFundo.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 370, -1, -1));
 
-        getContentPane().add(jPanelFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1180, 610));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(PaletaCores.PANEL_BORDA, 3));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setText("Listar Livros");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 80, -1, -1));
+
+        jTableReceitas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Código da Receita"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTableReceitas);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 250, 100));
+
+        jLabel12.setText("Código Receita:");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 100, -1));
+        jPanel1.add(txt_codigoReceita, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 140, -1));
+
+        bt_limparReceita.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_limparReceita.setText("Limpar");
+        bt_limparReceita.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                TelaLivros.this.mousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                TelaLivros.this.mouseReleased(evt);
+            }
+        });
+        bt_limparReceita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_limparReceitaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bt_limparReceita, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, -1, -1));
+        botoes.add(bt_limparReceita);
+
+        bt_adicionarReceita.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_adicionarReceita.setText("Adicionar");
+        bt_adicionarReceita.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                TelaLivros.this.mousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                TelaLivros.this.mouseReleased(evt);
+            }
+        });
+        bt_adicionarReceita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_adicionarReceitaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bt_adicionarReceita, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
+        botoes.add(bt_adicionarReceita);
+
+        jPanelFundo.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 130, 270, 220));
+        panels.add(jPanel1);
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel11.setText("Listar Livros");
+        jPanelFundo.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 110, -1, -1));
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel10.setText("Adcionar Receitas");
+        jPanelFundo.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 110, -1, -1));
+
+        getContentPane().add(jPanelFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1220, 610));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -470,6 +593,7 @@ public class TelaLivros extends javax.swing.JFrame {
             );
             
             banco.inserirLivro(ISBN, titulo, cpfEditor);
+            banco.inserirReceitasNoLivro(receitas, ISBN);
             
             JOptionPane.showMessageDialog(
                     rootPane, 
@@ -634,6 +758,55 @@ public class TelaLivros extends javax.swing.JFrame {
         
     }//GEN-LAST:event_bt_autalizarActionPerformed
 
+    private void bt_limparReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_limparReceitaActionPerformed
+        
+        receitas.clear();
+        mostrarReceitas();
+    }//GEN-LAST:event_bt_limparReceitaActionPerformed
+
+    private void bt_adicionarReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_adicionarReceitaActionPerformed
+        
+        try {
+            
+            int codigo = Integer.parseInt(
+                    txt_codigoReceita.getText()
+            );
+            
+            
+            
+            
+            
+            
+            
+            receitas.add(codigo);
+            
+            mostrarReceitas();
+            
+            
+            
+        } catch(Exception e) {
+            
+            JOptionPane.showMessageDialog(
+                    rootPane,
+                    e.getMessage(),
+                    "ERRO",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }//GEN-LAST:event_bt_adicionarReceitaActionPerformed
+
+    private void bt_verReceitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_verReceitasActionPerformed
+        String ISBN = "";
+        
+        int linhaSelecionada = jTable_consulta.getSelectedRow();
+        
+        DefaultTableModel model = (DefaultTableModel) 
+                                   jTable_consulta.getModel();
+        
+        ISBN = model.getValueAt(linhaSelecionada, 0).toString();
+        TelaReceitasLivro.main(ISBN);
+    }//GEN-LAST:event_bt_verReceitasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -670,16 +843,22 @@ public class TelaLivros extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_adicionarReceita;
     private javax.swing.JButton bt_atualizar;
     private javax.swing.JButton bt_autalizar;
     private javax.swing.JButton bt_cadastrar;
     private javax.swing.JButton bt_deletar;
+    private javax.swing.JButton bt_limparReceita;
     private javax.swing.JButton bt_listarISBN;
     private javax.swing.JButton bt_listarTodos;
+    private javax.swing.JButton bt_verReceitas;
     private javax.swing.JCheckBox ckb_atualizarCPFeditor;
     private javax.swing.JCheckBox ckb_atualizarISBN;
     private javax.swing.JCheckBox ckb_atualizarTitulo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -689,6 +868,7 @@ public class TelaLivros extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -696,6 +876,8 @@ public class TelaLivros extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelFundo;
     private javax.swing.JPanel jPanelTitulo;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableReceitas;
     private javax.swing.JTable jTable_consulta;
     private javax.swing.JLabel lb_novoCPFeditor;
     private javax.swing.JLabel lb_novoISBN;
@@ -704,6 +886,7 @@ public class TelaLivros extends javax.swing.JFrame {
     private javax.swing.JTextField txt_cadastrarCPFeditor;
     private javax.swing.JTextField txt_cadastrarISBN;
     private javax.swing.JTextField txt_cadastrarTitulo;
+    private javax.swing.JTextField txt_codigoReceita;
     private javax.swing.JTextField txt_deletarISBN;
     private javax.swing.JTextField txt_novoCPFeditor;
     private javax.swing.JTextField txt_novoISBN;

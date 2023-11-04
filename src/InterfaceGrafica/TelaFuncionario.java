@@ -153,6 +153,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
         jTable_consulta = new javax.swing.JTable();
         bt_listarTodos = new javax.swing.JButton();
         bt_procurarCPF = new javax.swing.JButton();
+        bt_vincularCozinheiro = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         txt_cpfFuncionarioAserAtualizado = new javax.swing.JTextField();
@@ -355,8 +356,26 @@ public class TelaFuncionario extends javax.swing.JFrame {
                 bt_procurarCPFActionPerformed(evt);
             }
         });
-        jPanel1.add(bt_procurarCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 150, 30));
+        jPanel1.add(bt_procurarCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 150, 30));
         botoes.add(bt_procurarCPF);
+
+        bt_vincularCozinheiro.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_vincularCozinheiro.setText("Vincular Cozinheiro a Restaurante");
+        bt_vincularCozinheiro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                TelaFuncionario.this.mousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                TelaFuncionario.this.mouseReleased(evt);
+            }
+        });
+        bt_vincularCozinheiro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_vincularCozinheiroActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bt_vincularCozinheiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, 270, 30));
+        botoes.add(bt_vincularCozinheiro);
 
         jPanelFundo.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 90, 760, 370));
         panels.add(jPanel1);
@@ -839,6 +858,62 @@ public class TelaFuncionario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bt_atualizarActionPerformed
 
+    private void bt_vincularCozinheiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_vincularCozinheiroActionPerformed
+        
+        try {
+            
+            BancoDeDados banco = BancoDeDados.getInstance(
+                    usuario,
+                      senha,
+           nomedb
+            );
+            
+            String CPF = "";
+        
+            int linhaSelecionada = jTable_consulta.getSelectedRow();
+        
+            DefaultTableModel model = (DefaultTableModel) 
+                                   jTable_consulta.getModel();
+        
+            CPF = model.getValueAt(linhaSelecionada, 0).toString();
+            
+            Funcionario funcionario = banco.getFuncionarioCPF(CPF);
+            if (! (funcionario instanceof Cozinheiro))
+                throw new Exception("Esse funcionário não é um cozinheiro");
+            
+            
+            
+            int codigoRestaurante = Integer.parseInt(JOptionPane.showInputDialog(
+                    this,
+                    "Digite o Código do Restaurante"
+            ));
+            
+            String data_str = JOptionPane.showInputDialog(
+                    this,
+                    "Digite a Data (dd/mm/yyyy)"
+            );
+            
+            SimpleDateFormat dataFormato = new SimpleDateFormat(
+                    "dd/MM/yyyy"
+            );
+            
+            Date data = dataFormato.parse(data_str);
+            
+            banco.vincularCozinheiroRestaurante(codigoRestaurante, CPF, data);
+            
+            
+        } catch(Exception e) {
+            
+            JOptionPane.showMessageDialog(
+                    rootPane,
+                    e.getMessage(),
+                    "ERRO",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            
+        }
+    }//GEN-LAST:event_bt_vincularCozinheiroActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -881,6 +956,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
     private javax.swing.JButton bt_deletar;
     private javax.swing.JButton bt_listarTodos;
     private javax.swing.JButton bt_procurarCPF;
+    private javax.swing.JButton bt_vincularCozinheiro;
     private javax.swing.JComboBox<String> cb_tipo;
     private javax.swing.JCheckBox ckb_atualizarCPF;
     private javax.swing.JCheckBox ckb_atualizarDataIngresso;

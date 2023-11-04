@@ -27,6 +27,7 @@ public interface IBancoDeDados {
     public Funcionario getFuncionarioCPF(String cpf) throws Exception;
     public void deletarFuncionario(String cpf) throws Exception;
     public ArrayList<Restaurante> getRestaurantes() throws Exception;
+    public void vincularCozinheiroRestaurante(int codigoRestaurante, String cpfCozinheiro, Date data) throws Exception;
     
     //CRUD RESTAURANTE
     public Restaurante getRestauranteCodigo(int codigo) throws Exception;
@@ -48,6 +49,7 @@ public interface IBancoDeDados {
     public Livro getLivroISBN(String ISBN) throws Exception;
     public void deletarLivro(String ISBN) throws Exception;
     public void atualizarLivro(Livro livro, String ISBNoriginal) throws Exception;
+    public ArrayList<Receita> getReceitasDoLivro(String ISBN) throws Exception;
     
     //CRUD INGREDIENTE
     public ArrayList<Ingrediente> getIngredientes() throws Exception;
@@ -64,6 +66,7 @@ public interface IBancoDeDados {
     public void deletarReceita(int codigo) throws Exception;
     public void inserirDegustacoes(ArrayList<ArrayList<Object>> degustacoes, int codigoReceita) throws Exception;
     public ArrayList<ArrayList<Object>> getDegustadoresReceita(int codigoReceita) throws Exception;
+    public void inserirReceitasNoLivro(ArrayList<Integer> codigosReceita, String ISBN) throws Exception;
     
     public void inserirFuncionario(
             String cpf,

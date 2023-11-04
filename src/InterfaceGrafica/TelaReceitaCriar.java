@@ -402,7 +402,7 @@ public class TelaReceitaCriar extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel17.setText("CPF do Degustador");
         jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
-        jPanel3.add(txt_notaTeste, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 80, -1));
+        jPanel3.add(txt_notaTeste, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 50, 80, -1));
         jPanel3.add(txt_cpfDegustador, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 150, -1));
         jPanel3.add(txt_dataTeste, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 120, -1));
 

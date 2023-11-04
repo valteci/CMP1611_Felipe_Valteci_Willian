@@ -1736,8 +1736,136 @@ public class BancoDeDados implements IBancoDeDados {
         
         return resultado;
     }
-        
     
+    
+    @Override
+    public void inserirReceitasNoLivro(ArrayList<Integer> codigosReceita, String ISBN) throws Exception {
+        
+        String url = getUrl();                
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        
+        
+        for (int i = 0; i < codigosReceita.size(); i++) {
+            
+            String query = """
+                           INSERT INTO inclui (cod_receita, isbn) VALUES (%d, %s)
+                           """.formatted(
+                                   codigosReceita.get(i),
+                                   ISBN
+                           );
+            
+            comando.execute(query);
+        }
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+        
+    }
+    
+    
+    public ArrayList<Receita> getReceitasDoLivro(String ISBN) throws Exception {
+        
+        String url = getUrl();
+        String query = """
+                       SELECT r.nome_receita, r.cod_receita 
+                       FROM livros l 
+                       INNER JOIN inclui i ON l.isbn = i.isbn 
+                       INNER JOIN receitas r ON r.Cod_Receita = i.cod_receita
+                       WHERE l.isbn = %s;
+                       """.formatted(
+                               ISBN
+                       );
+        
+        ArrayList<Receita> resultado = new ArrayList<Receita>();
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        ResultSet resultadoConsulta;
+                
+        resultadoConsulta = comando.executeQuery(query);
+        
+        while (resultadoConsulta.next()) {
+            
+            String nome = resultadoConsulta.getString(
+                    "nome_receita"
+            );
+            
+            int codigo = resultadoConsulta.getInt(
+                    "cod_receita"
+            );
+            
+            Receita receita = new Receita();
+            receita.setCodigo(codigo);
+            receita.setNomeReceita(nome);
+            
+            resultado.add(receita);
+        }
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+        
+        return resultado;
+    }
+        
+    @Override
+    public void vincularCozinheiroRestaurante(int codigoRestaurante, String cpfCozinheiro, Date data) throws Exception {
+        
+        String url = getUrl();
+        
+        SimpleDateFormat dataFormato = new SimpleDateFormat(
+                    "yyyy-MM-dd"
+        );
+        
+        String dataFormatada = dataFormato.format(data);
+        
+        String query = """
+                       INSERT INTO CURRICULO (Cpf_Coz, Cod_Restaurante, 
+                       Dt_Contrato_Coz) VALUES (%s, %d, '%s');
+                       """.formatted(
+                               cpfCozinheiro,
+                               codigoRestaurante,
+                               dataFormatada
+                       );
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        comando.execute(query);
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+    }
     
     
     public String getUsuario() {
