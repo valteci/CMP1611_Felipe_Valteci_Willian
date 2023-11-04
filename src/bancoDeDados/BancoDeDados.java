@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import restaurantes.Restaurante;
@@ -1617,6 +1618,55 @@ public class BancoDeDados implements IBancoDeDados {
         
         Statement comando = conexao.createStatement();
         comando.execute(query);
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+        
+    }
+    
+    @Override
+    public void inserirDegustacoes(ArrayList<ArrayList<Object>> degustacoes, int codigoReceita) throws Exception {
+        
+        
+        String url = getUrl();
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        
+        SimpleDateFormat dataFormato = new SimpleDateFormat(
+                    "yyyy-MM-dd"
+        );
+        
+        for (int i = 0; i < degustacoes.size(); i++) {
+            
+            var linha = degustacoes.get(i);
+            String data = dataFormato.format(linha.get(2));
+            
+            String query = """
+                            INSERT INTO testa (cpf_deg_test, cod_rec_test, 
+                            dt_teste, nota_teste) VALUES (%s, %d, 
+                            '%s', %d);
+                            """.formatted(
+                                    linha.get(0).toString(),//cpf
+                                    codigoReceita,                                    
+                                    data,
+                                    Integer.parseInt(linha.get(2).toString())//nota
+                            );
+                
+            comando.execute(query);
+        }
+        
+        
         
         if (comando != null) {
             comando.close();

@@ -7,6 +7,7 @@ package InterfaceGrafica;
 import Receita.IngredienteReceita;
 import Receita.Receita;
 import bancoDeDados.BancoDeDados;
+import funcionarios.Degustador;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,15 +34,46 @@ public class TelaReceitaCriar extends javax.swing.JFrame {
     String nomedb = "CMP1611_Felipe_Valteci_Willian";
     
     ArrayList<IngredienteReceita> ingredientes = null;
+    ArrayList<ArrayList<Object>> degustacoes = null;
     
     public TelaReceitaCriar() {
         botoes = new ArrayList<>();
         labels = new ArrayList<>();
         panels = new ArrayList<>();
         ingredientes = new ArrayList<>();
+        degustacoes = new ArrayList<ArrayList<Object>>();
+        
+        
         initComponents();
         configurarTela();
         configurarCores();
+    }
+    
+    public void mostrarDegustacoes() {
+        
+        DefaultTableModel model = (DefaultTableModel) 
+                                   jTableDegustadores.getModel();
+        
+        SimpleDateFormat dataFormato = new SimpleDateFormat(
+                    "dd/MM/yyyy"
+        );
+            
+        
+        
+        while (model.getRowCount()> 0)
+            model.removeRow(0);
+        
+        for (var degustacao : degustacoes) {
+                
+            String dataTeste = dataFormato.format(degustacao.get(1));            
+            
+            model.addRow(new Object[]{
+                    degustacao.get(0),
+                    dataTeste,
+                    degustacao.get(2)
+                });
+        }
+        
     }
     
     public void mostrarIngredientes() {
@@ -111,14 +143,27 @@ public class TelaReceitaCriar extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         txt_quantidade = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
         txt_medida = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_consulta = new javax.swing.JTable();
         bt_acionarIngrediente = new javax.swing.JButton();
-        bt_removerTudo = new javax.swing.JButton();
+        bt_removerIngredientes = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         bt_cirarReceita = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableDegustadores = new javax.swing.JTable();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        txt_notaTeste = new javax.swing.JTextField();
+        txt_cpfDegustador = new javax.swing.JTextField();
+        txt_dataTeste = new javax.swing.JTextField();
+        bt_removerDegustadores = new javax.swing.JButton();
+        bt_adicionarTeste = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -132,7 +177,7 @@ public class TelaReceitaCriar extends javax.swing.JFrame {
         jLabel1.setText("CADASTRAR RECEITAS");
         jPanelTitulo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 550, 30));
 
-        jPanelFundo.add(jPanelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1160, 90));
+        jPanelFundo.add(jPanelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1160, 70));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(PaletaCores.PANEL_BORDA, 3));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -185,7 +230,7 @@ public class TelaReceitaCriar extends javax.swing.JFrame {
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 170, -1));
         jPanel1.add(txt_codigoReceita, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, 180, -1));
 
-        jPanelFundo.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 440, 310));
+        jPanelFundo.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 440, 310));
         panels.add(jPanel1);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(PaletaCores.PANEL_BORDA, 3));
@@ -200,10 +245,6 @@ public class TelaReceitaCriar extends javax.swing.JFrame {
         jLabel8.setText("quantidade:");
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 130, -1));
         jPanel2.add(txt_quantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, 180, -1));
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel9.setText("Medida");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 110, -1));
 
         txt_medida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -270,9 +311,9 @@ public class TelaReceitaCriar extends javax.swing.JFrame {
         jPanel2.add(bt_acionarIngrediente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 510, 30));
         botoes.add(bt_acionarIngrediente);
 
-        bt_removerTudo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        bt_removerTudo.setText("Remover tudo");
-        bt_removerTudo.addMouseListener(new java.awt.event.MouseAdapter() {
+        bt_removerIngredientes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_removerIngredientes.setText("Remover tudo");
+        bt_removerIngredientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 TelaReceitaCriar.this.mousePressed(evt);
             }
@@ -280,17 +321,22 @@ public class TelaReceitaCriar extends javax.swing.JFrame {
                 TelaReceitaCriar.this.mouseReleased(evt);
             }
         });
-        bt_removerTudo.addActionListener(new java.awt.event.ActionListener() {
+        bt_removerIngredientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_removerTudoActionPerformed(evt);
+                bt_removerIngredientesActionPerformed(evt);
             }
         });
-        jPanel2.add(bt_removerTudo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, -1, -1));
-        botoes.add(bt_removerTudo);
+        jPanel2.add(bt_removerIngredientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, -1, -1));
+        botoes.add(bt_removerIngredientes);
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel15.setText("Medida");
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 110, -1));
 
         jPanelFundo.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 110, 550, 360));
         panels.add(jPanel2);
 
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel12.setText("Ingredientes");
         jPanelFundo.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 90, -1, -1));
 
@@ -312,7 +358,86 @@ public class TelaReceitaCriar extends javax.swing.JFrame {
         jPanelFundo.add(bt_cirarReceita, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 520, 150, 40));
         botoes.add(bt_cirarReceita);
 
-        getContentPane().add(jPanelFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1160, 590));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(PaletaCores.PANEL_BORDA, 3));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel13.setText("Data do teste: ");
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
+
+        jTableDegustadores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "CPF degustador", "Data do teste", "Nota"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTableDegustadores);
+
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 400, 100));
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel16.setText("Nota: ");
+        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 60, -1));
+
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel17.setText("CPF do Degustador");
+        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        jPanel3.add(txt_notaTeste, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 80, -1));
+        jPanel3.add(txt_cpfDegustador, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 150, -1));
+        jPanel3.add(txt_dataTeste, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 120, -1));
+
+        bt_removerDegustadores.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_removerDegustadores.setText("Remover tudo");
+        bt_removerDegustadores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_removerDegustadoresActionPerformed(evt);
+            }
+        });
+        jPanel3.add(bt_removerDegustadores, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 190, -1));
+        botoes.add(bt_removerDegustadores);
+
+        bt_adicionarTeste.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_adicionarTeste.setText("Adcionar teste");
+        bt_adicionarTeste.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_adicionarTesteActionPerformed(evt);
+            }
+        });
+        jPanel3.add(bt_adicionarTeste, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 200, 190, -1));
+        botoes.add(bt_adicionarTeste);
+
+        jPanelFundo.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 440, 240));
+        panels.add(jPanel3);
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel14.setText("Informações Receita");
+        jPanelFundo.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 150, -1));
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel11.setText("Degustadores");
+        jPanelFundo.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 110, -1));
+
+        getContentPane().add(jPanelFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1160, 690));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -332,6 +457,11 @@ public class TelaReceitaCriar extends javax.swing.JFrame {
     private void bt_cirarReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cirarReceitaActionPerformed
         
         try {
+            
+            if (degustacoes.isEmpty())
+                throw new Exception("Deve have no mínimo 1 degustação da receita");
+            
+            
             
             int codigoReceita = Integer.parseInt(
                     txt_codigoReceita.getText()
@@ -370,6 +500,7 @@ public class TelaReceitaCriar extends javax.swing.JFrame {
             );
             
             banco.inserirReceita(receita, ingredientes);
+            banco.inserirDegustacoes(degustacoes, codigoReceita);
             
             JOptionPane.showMessageDialog(
                     rootPane, 
@@ -445,11 +576,58 @@ public class TelaReceitaCriar extends javax.swing.JFrame {
         
     }//GEN-LAST:event_bt_acionarIngredienteActionPerformed
 
-    private void bt_removerTudoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_removerTudoActionPerformed
+    private void bt_removerIngredientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_removerIngredientesActionPerformed
         
         ingredientes.clear();
         mostrarIngredientes();
-    }//GEN-LAST:event_bt_removerTudoActionPerformed
+    }//GEN-LAST:event_bt_removerIngredientesActionPerformed
+
+    private void bt_adicionarTesteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_adicionarTesteActionPerformed
+        
+        try {
+            
+            String cpf = txt_cpfDegustador.getText();
+            int nota = Integer.parseInt(txt_notaTeste.getText());
+            
+            Date dataTeste = null;
+            
+            SimpleDateFormat dataFormato = new SimpleDateFormat(
+                    "dd/MM/yyyy"
+            );
+            
+            dataTeste = dataFormato.parse(txt_dataTeste.getText());
+            
+            
+            
+            
+            ArrayList<Object> degustaco = new ArrayList<>();
+            
+            degustaco.add(cpf);
+            degustaco.add(dataTeste);
+            degustaco.add(nota);
+            
+            degustacoes.add(degustaco);
+            
+            mostrarDegustacoes();
+            
+        } catch (Exception e) {
+            
+            JOptionPane.showMessageDialog(
+                    rootPane,
+                    e.getMessage(),
+                    "ERRO",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+        
+    }//GEN-LAST:event_bt_adicionarTesteActionPerformed
+
+    private void bt_removerDegustadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_removerDegustadoresActionPerformed
+        
+        degustacoes = new ArrayList<ArrayList<Object>>();
+        mostrarDegustacoes();
+        
+    }//GEN-LAST:event_bt_removerDegustadoresActionPerformed
 
     /**
      * @param args the command line arguments
@@ -488,11 +666,19 @@ public class TelaReceitaCriar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_acionarIngrediente;
+    private javax.swing.JButton bt_adicionarTeste;
     private javax.swing.JButton bt_cirarReceita;
-    private javax.swing.JButton bt_removerTudo;
+    private javax.swing.JButton bt_removerDegustadores;
+    private javax.swing.JButton bt_removerIngredientes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -500,21 +686,26 @@ public class TelaReceitaCriar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelFundo;
     private javax.swing.JPanel jPanelTitulo;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableDegustadores;
     private javax.swing.JTable jTable_consulta;
     private javax.swing.JTextField txt_codigoCategoria;
     private javax.swing.JTextField txt_codigoIngrediente;
     private javax.swing.JTextField txt_codigoReceita;
     private javax.swing.JTextField txt_cpfCozinheiro;
+    private javax.swing.JTextField txt_cpfDegustador;
     private javax.swing.JTextField txt_dataCriacao;
+    private javax.swing.JTextField txt_dataTeste;
     private javax.swing.JTextField txt_medida;
     private javax.swing.JTextField txt_nomeCozinheiro;
     private javax.swing.JTextField txt_nomeReceita;
+    private javax.swing.JTextField txt_notaTeste;
     private javax.swing.JTextField txt_quantidade;
     // End of variables declaration//GEN-END:variables
 }

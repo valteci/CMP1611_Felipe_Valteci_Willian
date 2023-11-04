@@ -198,7 +198,7 @@ public class TelaReceitasMain extends javax.swing.JFrame {
             }
         });
         jPanel1.add(bt_deletar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 10, 260, 40));
-        botoes.add(bt_verIngredientes);
+        botoes.add(bt_deletar);
 
         bt_verIngredientes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         bt_verIngredientes.setText("Ver ingredientes da receita");
