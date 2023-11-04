@@ -5,6 +5,7 @@
 package bancoDeDados;
 
 import Livros.Livro;
+import Receita.Receita;
 import categoria.Categoria;
 import funcionarios.Funcionario;
 import java.util.ArrayList;
@@ -53,6 +54,10 @@ public interface IBancoDeDados {
     public void inserirIngrediente(String nome) throws Exception;
     public void deletarIngrediente(int codigo) throws Exception;
     public void atualizarIngrediente(int codigo, String novoNome) throws Exception;
+    
+    //CRUD RECEITAS
+    public ArrayList<Receita> getReceitas() throws Exception;
+    public Receita getReceitaCodigo(int codigo) throws Exception;
     
     public void inserirFuncionario(
             String cpf,

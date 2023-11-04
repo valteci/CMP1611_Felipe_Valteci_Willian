@@ -6,8 +6,6 @@ package InterfaceGrafica;
 
 import bancoDeDados.BancoDeDados;
 import funcionarios.Cozinheiro;
-import funcionarios.Degustador;
-import funcionarios.Funcionario;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;

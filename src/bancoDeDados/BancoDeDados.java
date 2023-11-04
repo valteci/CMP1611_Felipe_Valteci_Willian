@@ -5,6 +5,7 @@
 package bancoDeDados;
 
 import Livros.Livro;
+import Receita.Receita;
 import categoria.Categoria;
 import funcionarios.Cargo;
 import funcionarios.Cozinheiro;
@@ -384,7 +385,7 @@ public class BancoDeDados implements IBancoDeDados {
         calendario.setTime(dataIngresso);
         int dia = calendario.get(Calendar.DAY_OF_MONTH);
         int mes = calendario.get(Calendar.MONTH) + 1;
-        int ano = calendario.get(Calendar.YEAR);                                
+        int ano = calendario.get(Calendar.YEAR);
         
         String salarioFormatado = String.format(
                 "%.2f",
@@ -1340,6 +1341,144 @@ public class BancoDeDados implements IBancoDeDados {
         }
     }
     
+    
+    @Override
+    public ArrayList<Receita> getReceitas() throws Exception {
+        ArrayList<Receita> resultado = new ArrayList<>();
+        
+        String url = getUrl();
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        ResultSet resultadoConsulta;
+        
+        resultadoConsulta = comando.executeQuery(
+                "SELECT * FROM receitas"
+        );
+        
+        
+        
+        while (resultadoConsulta.next()) {
+            
+            int codigoReceita = resultadoConsulta.getInt(
+                    "Cod_Receita"
+            );
+            
+            String nomeReceita = resultadoConsulta.getString(
+                    "Nome_Receita"
+            );
+            
+            String nomeCozinheiro = resultadoConsulta.getString(
+                    "Nome_Coz"
+            );
+            
+            Date dataCriacao = resultadoConsulta.getDate(
+                    "Data_Criacao"
+            );
+            
+            String cpfCozinheiro = resultadoConsulta.getString(
+                    "Cpf_Coz"
+            );
+            
+            int codigoCategoria = resultadoConsulta.getInt(
+                    "Cod_Cat_Rec"
+            );
+            
+            Receita receita = new Receita(
+                    codigoReceita,
+                    nomeReceita,
+                    dataCriacao,
+                    nomeCozinheiro,
+                    cpfCozinheiro,
+                    codigoCategoria
+            );
+            
+            resultado.add(receita);
+        }
+        
+        
+        if (resultadoConsulta != null)
+            resultadoConsulta.close();
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+        
+        return resultado;
+    }
+    
+    @Override
+    public Receita getReceitaCodigo(int codigo) throws Exception {
+        String url = getUrl();
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        ResultSet resultadoConsulta;
+        
+        resultadoConsulta = comando.executeQuery(
+                "SELECT * FROM receitas WHERE Cod_Receita = " +
+                codigo
+        );
+        
+        if (! resultadoConsulta.next())
+            throw new Exception(
+                    "Receita não existe ou código inválido"
+            );
+            
+            String nomeReceita = resultadoConsulta.getString(
+                    "Nome_Receita"
+            );
+            
+            String nomeCozinheiro = resultadoConsulta.getString(
+                    "Nome_Coz"
+            );
+            
+            Date dataCriacao = resultadoConsulta.getDate(
+                    "Data_Criacao"
+            );
+            
+            String cpfCozinheiro = resultadoConsulta.getString(
+                    "Cpf_Coz"
+            );
+            
+            int codigoCategoria = resultadoConsulta.getInt(
+                    "Cod_Cat_Rec"
+            );
+            
+            Receita receita = new Receita(
+                    codigo,
+                    nomeReceita,
+                    dataCriacao,
+                    nomeCozinheiro,
+                    cpfCozinheiro,
+                    codigoCategoria
+            );
+            
+            if (resultadoConsulta != null)
+                resultadoConsulta.close();
+        
+            if (comando != null)
+                comando.close();
+
+            if (conexao != null)
+                conexao.close();
+        
+            return receita;
+    }
     
     public String getUsuario() {
         return usuario;
