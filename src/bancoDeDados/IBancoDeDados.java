@@ -5,6 +5,7 @@
 package bancoDeDados;
 
 import Livros.Livro;
+import Receita.IngredienteReceita;
 import Receita.Receita;
 import categoria.Categoria;
 import funcionarios.Funcionario;
@@ -58,6 +59,7 @@ public interface IBancoDeDados {
     //CRUD RECEITAS
     public ArrayList<Receita> getReceitas() throws Exception;
     public Receita getReceitaCodigo(int codigo) throws Exception;
+    public void inserirReceita(Receita receita, ArrayList<IngredienteReceita> ingredientes) throws Exception;
     
     public void inserirFuncionario(
             String cpf,

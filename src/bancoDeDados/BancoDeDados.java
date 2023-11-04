@@ -5,6 +5,7 @@
 package bancoDeDados;
 
 import Livros.Livro;
+import Receita.IngredienteReceita;
 import Receita.Receita;
 import categoria.Categoria;
 import funcionarios.Cargo;
@@ -1479,6 +1480,65 @@ public class BancoDeDados implements IBancoDeDados {
         
             return receita;
     }
+    
+    
+    @Override
+    public void inserirReceita(Receita receita, ArrayList<IngredienteReceita> ingredientes) throws Exception {
+        
+        String url = getUrl();
+        String query1 = """
+                        INSERT INTO receitas (Cod_Receita, nome_receita, 
+                        Nome_Coz, data_criacao, cpf_coz, Cod_Cat_Rec) VALUES 
+                        (%d, '%s', '%s', '%s', 
+                        %s, %d)
+                        """.formatted(
+                                receita.getCodigo(),
+                                receita.getNomeReceita(),
+                                receita.getNomeChef(),
+                                receita.getStringDate(),
+                                receita.getCpf_cozinheiro(),
+                                receita.getCodigoCategoria()
+                        );
+        
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        comando.execute(query1);
+        
+        
+        for (int i = 0; i < ingredientes.size(); i++) {
+            
+            String query2 = """
+                        INSERT INTO ingredientes_receita(cod_receita, 
+                        cod_ingrediente, Quant_Ingrediente, Medida) VALUES 
+                        (%d, %d, %d, '%s')
+                        """.formatted(
+                                receita.getCodigo(),
+                                ingredientes.get(i).getCodigoIngrediente(),
+                                ingredientes.get(i).getQuantidade(),
+                                ingredientes.get(i).getMedida()
+                        );
+                
+            comando.execute(query2);
+            
+        }
+        
+        
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+    }
+    
     
     public String getUsuario() {
         return usuario;

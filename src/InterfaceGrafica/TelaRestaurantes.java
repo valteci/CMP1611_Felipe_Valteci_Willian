@@ -68,7 +68,7 @@ public class TelaRestaurantes extends javax.swing.JFrame {
                     restaurante.getNome()
                 });
         }
-}
+    }
     
     
     private void configurarCores() {

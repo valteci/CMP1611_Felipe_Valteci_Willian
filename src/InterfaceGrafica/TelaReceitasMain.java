@@ -345,7 +345,7 @@ public class TelaReceitasMain extends javax.swing.JFrame {
     }//GEN-LAST:event_bt_listarTodos1ActionPerformed
 
     private void bt_listarTodos2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_listarTodos2ActionPerformed
-        // TODO add your handling code here:
+        TelaReceitaCriar.main(null);
     }//GEN-LAST:event_bt_listarTodos2ActionPerformed
 
     private void bt_listarTodos3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_listarTodos3ActionPerformed
