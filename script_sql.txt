@@ -9,7 +9,7 @@ CREATE TABLE Cozinheiros (
     Dt_Contrato_Coz DATE NOT NULL,
     Salario_Coz NUMERIC(8, 2),
     Cpf_Coz BIGINT PRIMARY KEY,
-	FOREIGN KEY(cpf_coz) REFERENCES Profissionais(cpf_profissional) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY(cpf_coz) REFERENCES Profissionais(cpf_profissional) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Tabela Degustadores (referencia a tabela Pessoas)
@@ -51,7 +51,8 @@ CREATE TABLE Receitas (
     Nome_Coz VARCHAR(80) REFERENCES Cozinheiros(Nome_Coz) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
     Data_Criacao DATE NOT NULL,
     Cpf_Coz BIGINT REFERENCES Cozinheiros(Cpf_Coz) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
-    Cod_Cat_Rec INT REFERENCES Categoria_Receita(Cod_Cat_Rec) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL
+    Cod_Cat_Rec INT REFERENCES Categoria_Receita(Cod_Cat_Rec) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL, 
+    UNIQUE(Nome_Receita, cpf_coz)
 );
 
 -- Tabela Restaurantes

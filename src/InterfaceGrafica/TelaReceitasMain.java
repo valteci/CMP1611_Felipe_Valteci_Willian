@@ -95,6 +95,8 @@ public class TelaReceitasMain extends javax.swing.JFrame {
         jTable_consulta = new javax.swing.JTable();
         bt_procurarCodigo = new javax.swing.JButton();
         bt_listarTodos = new javax.swing.JButton();
+        bt_deletar = new javax.swing.JButton();
+        bt_verIngredientes = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         bt_listarTodos1 = new javax.swing.JButton();
         bt_listarTodos2 = new javax.swing.JButton();
@@ -119,24 +121,7 @@ public class TelaReceitasMain extends javax.swing.JFrame {
 
         jTable_consulta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Código", "Nome da Receita", "Data Crição", "Nome do Chefe", "Código da Categoria"
@@ -176,7 +161,7 @@ public class TelaReceitasMain extends javax.swing.JFrame {
                 bt_procurarCodigoActionPerformed(evt);
             }
         });
-        jPanel1.add(bt_procurarCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 10, 210, 40));
+        jPanel1.add(bt_procurarCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, 210, 40));
         botoes.add(bt_procurarCodigo);
 
         bt_listarTodos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -196,6 +181,42 @@ public class TelaReceitasMain extends javax.swing.JFrame {
         });
         jPanel1.add(bt_listarTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, 40));
         botoes.add(bt_listarTodos);
+
+        bt_deletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_deletar.setText("Deletar");
+        bt_deletar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                bt_deletarmousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                bt_deletarmouseReleased(evt);
+            }
+        });
+        bt_deletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_deletarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bt_deletar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 10, 260, 40));
+        botoes.add(bt_verIngredientes);
+
+        bt_verIngredientes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_verIngredientes.setText("Ver ingredientes da receita");
+        bt_verIngredientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                TelaReceitasMain.this.mousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                TelaReceitasMain.this.mouseReleased(evt);
+            }
+        });
+        bt_verIngredientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_verIngredientesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bt_verIngredientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 10, 260, 40));
+        botoes.add(bt_verIngredientes);
 
         jPanelFundo.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 1080, 250));
         panels.add(jPanel1);
@@ -352,6 +373,77 @@ public class TelaReceitasMain extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_bt_listarTodos3ActionPerformed
 
+    private void bt_verIngredientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_verIngredientesActionPerformed
+        
+        int codigoReceita = -1;
+        
+        int linhaSelecionada = jTable_consulta.getSelectedRow();
+        
+        DefaultTableModel model = (DefaultTableModel) 
+                                   jTable_consulta.getModel();
+        
+        codigoReceita = Integer.parseInt(
+                model.getValueAt(linhaSelecionada, 0).toString()
+        );
+        
+        TelaVerIngredientesReceita.main(codigoReceita);
+    }//GEN-LAST:event_bt_verIngredientesActionPerformed
+
+    private void bt_deletarmousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_deletarmousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bt_deletarmousePressed
+
+    private void bt_deletarmouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_deletarmouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bt_deletarmouseReleased
+
+    private void bt_deletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_deletarActionPerformed
+        
+        try {
+            
+            int codigoReceita = -1;
+
+            int linhaSelecionada = jTable_consulta.getSelectedRow();
+
+            DefaultTableModel model = (DefaultTableModel) 
+                                       jTable_consulta.getModel();
+
+            codigoReceita = Integer.parseInt(
+                    model.getValueAt(linhaSelecionada, 0).toString()
+            );
+
+            BancoDeDados banco = BancoDeDados.getInstance(
+                    usuario,
+                    senha,
+                    nomedb
+            );
+            
+            
+            banco.getReceitaCodigo(codigoReceita);
+            banco.deletarReceita(codigoReceita);
+            
+            
+            
+            JOptionPane.showMessageDialog(
+                    rootPane, 
+                    "Receita deletada com sucesso!",
+                    "SUCESSO",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            
+            
+        } catch(Exception e) {
+            
+            JOptionPane.showMessageDialog(
+                    rootPane,
+                    e.getMessage(),
+                    "ERRO",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+        
+    }//GEN-LAST:event_bt_deletarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -388,11 +480,13 @@ public class TelaReceitasMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_deletar;
     private javax.swing.JButton bt_listarTodos;
     private javax.swing.JButton bt_listarTodos1;
     private javax.swing.JButton bt_listarTodos2;
     private javax.swing.JButton bt_listarTodos3;
     private javax.swing.JButton bt_procurarCodigo;
+    private javax.swing.JButton bt_verIngredientes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

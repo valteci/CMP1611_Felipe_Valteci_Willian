@@ -1539,6 +1539,95 @@ public class BancoDeDados implements IBancoDeDados {
         }
     }
     
+    @Override
+    public ArrayList<ArrayList<Object>> getIngredientesReceita(
+            int codigoReceita
+    ) throws Exception {
+        
+        String url = getUrl();
+        String query = """
+                       select ing.Nome_Ingrediente, rec_ing.quant_ingrediente, 
+                       rec_ing.medida from ingredientes_receita rec_ing 
+                       inner join ingrediente ing on 
+                       rec_ing.Cod_Ingrediente = ing.cod_ingrediente and 
+                       rec_ing.cod_receita = %d;
+                       """.formatted(codigoReceita);
+        
+        ArrayList<ArrayList<Object>> resultado = new 
+                                                ArrayList<ArrayList<Object>>();
+        
+        
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        ResultSet resultadoConsulta;
+                
+        resultadoConsulta = comando.executeQuery(query);
+        
+        while (resultadoConsulta.next()) {
+            
+            String nome = resultadoConsulta.getString(
+                    "Nome_Ingrediente"
+            );
+            
+            int quantidade = resultadoConsulta.getInt(
+                    "quant_ingrediente"
+            );
+            
+            String medida = resultadoConsulta.getString(
+                    "medida"
+            );
+            
+            ArrayList<Object> itens = new ArrayList<Object>();
+            itens.add(nome);
+            itens.add(quantidade);
+            itens.add(medida);
+            
+            resultado.add(itens);
+        }
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+        
+        return resultado;
+    }
+    
+    @Override
+    public void deletarReceita(int codigo) throws Exception {
+        
+        String url = getUrl();
+        String query = "DELETE FROM receitas WHERE cod_receita = " +
+                codigo;
+        
+        Connection conexao = DriverManager.getConnection(
+                url,
+                usuario,
+                senha
+        );
+        
+        Statement comando = conexao.createStatement();
+        comando.execute(query);
+        
+        if (comando != null) {
+            comando.close();
+        }
+    
+        if (conexao != null) {
+            conexao.close();
+        }
+        
+    }
+    
     
     public String getUsuario() {
         return usuario;
