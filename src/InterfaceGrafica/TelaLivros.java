@@ -27,10 +27,6 @@ public class TelaLivros extends javax.swing.JFrame {
     ArrayList<JPanel> panels;
     ArrayList<Integer> receitas;
     
-    String usuario = "postgres";
-    String senha = "1Z2ht6b.";
-    String nomedb = "CMP1611_Felipe_Valteci_Willian";
-    
     public TelaLivros() {
         
         botoes = new ArrayList<>();
@@ -586,11 +582,7 @@ public class TelaLivros extends javax.swing.JFrame {
             if (titulo.equals(""))
                 throw new Exception("Título é obrigatório");
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-                    nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             banco.inserirLivro(ISBN, titulo, cpfEditor);
             banco.inserirReceitasNoLivro(receitas, ISBN);
@@ -618,11 +610,7 @@ public class TelaLivros extends javax.swing.JFrame {
         
         try { 
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-                    nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             ArrayList<Livro> livros = banco.getLivros();
             mostrarLivros(livros);
@@ -651,11 +639,7 @@ public class TelaLivros extends javax.swing.JFrame {
             if (ISBN == null || ISBN.equals(""))
                 return;                        
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-          nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             Livro livro = banco.getLivroISBN(ISBN);
             var livros = new ArrayList<Livro>();
@@ -680,11 +664,7 @@ public class TelaLivros extends javax.swing.JFrame {
             
             String ISBN = txt_deletarISBN.getText();
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-                    nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             
             banco.getLivroISBN(ISBN);
@@ -712,11 +692,7 @@ public class TelaLivros extends javax.swing.JFrame {
         
         try {
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-                    nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             String ISBNoriginal = txt_ISBNatualizar.getText();
             Livro livro = banco.getLivroISBN(ISBNoriginal);

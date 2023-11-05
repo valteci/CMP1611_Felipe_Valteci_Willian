@@ -5,6 +5,7 @@
 package cmp1611_felipe_valteci_willian;
 
 import InterfaceGrafica.main;
+import bancoDeDados.BancoDeDados;
 
 /**
  *
@@ -16,6 +17,13 @@ public class CMP1611_Felipe_Valteci_Willian {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        String usuario = "postgres";
+        String senha = "1Z2ht6b.";
+        String nomedb = "CMP1611_Felipe_Valteci_Willian";
+        
+        BancoDeDados banco = BancoDeDados.getInstance(usuario, senha, nomedb);
+        
         main.main(null);
     }
     

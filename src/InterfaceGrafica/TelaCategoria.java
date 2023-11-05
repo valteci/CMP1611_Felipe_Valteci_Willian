@@ -29,10 +29,7 @@ public class TelaCategoria extends javax.swing.JFrame {
 
     ArrayList<JButton> botoes;
     ArrayList<JLabel> labels;
-    ArrayList<JPanel> panels;
-    String usuario = "postgres";
-    String senha = "1Z2ht6b.";
-    String nomedb = "CMP1611_Felipe_Valteci_Willian";
+    ArrayList<JPanel> panels;    
     
     public TelaCategoria() {
         botoes = new ArrayList<>();
@@ -332,11 +329,7 @@ public class TelaCategoria extends javax.swing.JFrame {
             
             int codigo = Integer.parseInt(txt_deletarCodigo.getText());
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-                    nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             
             banco.getCategoriaCodigo(codigo);
@@ -364,11 +357,7 @@ public class TelaCategoria extends javax.swing.JFrame {
         
         try {
 
-            BancoDeDados banco = BancoDeDados.getInstance(
-                  usuario,
-                    senha,
-              nomedb
-                );
+            BancoDeDados banco = BancoDeDados.getInstance();
 
             ArrayList<Categoria> categorias = banco.getCategorias();
             mostrarCategoria(categorias);
@@ -391,11 +380,7 @@ public class TelaCategoria extends javax.swing.JFrame {
             int codigo = Integer.parseInt(txt_atualizarCodigo.getText());
             String novaDescricao = txt_novaDescricao.getText();
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-                    nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             banco.getCategoriaCodigo(codigo);
             banco.atualizarCategoria(codigo, novaDescricao);
@@ -436,11 +421,7 @@ public class TelaCategoria extends javax.swing.JFrame {
         try {
             String descricao = txt_cadastrarDescricao.getText();
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-                    nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             banco.inserirCategoria(descricao);
             
@@ -479,11 +460,7 @@ public class TelaCategoria extends javax.swing.JFrame {
             
             int codigo = Integer.parseInt(codigo_str);
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-          nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             Categoria categoria = banco.getCategoriaCodigo(codigo);
             var categorias = new ArrayList<Categoria>();

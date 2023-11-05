@@ -23,9 +23,7 @@ public class TelaVerDegustadoresReceita extends javax.swing.JFrame {
     ArrayList<JButton> botoes;
     ArrayList<JLabel> labels;
     ArrayList<JPanel> panels;
-    String usuario = "postgres";
-    String senha = "1Z2ht6b.";
-    String nomedb = "CMP1611_Felipe_Valteci_Willian";
+
     
     public TelaVerDegustadoresReceita(int codigoReceita) {
         
@@ -38,11 +36,7 @@ public class TelaVerDegustadoresReceita extends javax.swing.JFrame {
             configurarTela();
             configurarCores();
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-                    nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
 
             var itens = banco.getDegustadoresReceita(codigoReceita);
             mostrarDegustadores(itens);

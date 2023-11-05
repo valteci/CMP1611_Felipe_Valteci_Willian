@@ -28,10 +28,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
 
     ArrayList<JButton> botoes;
     ArrayList<JLabel> labels;
-    ArrayList<JPanel> panels;
-    String usuario = "postgres";
-    String senha = "1Z2ht6b.";
-    String nomedb = "CMP1611_Felipe_Valteci_Willian";
+    ArrayList<JPanel> panels;    
     
     public TelaFuncionario() {
         botoes = new ArrayList<>();
@@ -590,11 +587,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
         
         try {
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                      senha,
-           nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             ArrayList<Funcionario> funcionarios = banco.getFuncionarios();
             mostrarFuncionarios(funcionarios);            
@@ -625,11 +618,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
             if (cpf == null || cpf.equals(""))
                 return;
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-          nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             Funcionario funcionario = banco.getFuncionarioCPF(cpf);
             var funcionarios = new ArrayList<Funcionario>();
@@ -656,11 +645,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
             if (cpf.equals(""))
                 return;
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-              usuario,
-                senha,
-          nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             banco.deletarFuncionario(cpf);
             
@@ -686,11 +671,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
         
         try {
 
-            BancoDeDados banco = BancoDeDados.getInstance(
-                  usuario,
-                    senha,
-              nomedb
-                );
+            BancoDeDados banco = BancoDeDados.getInstance();
 
             String nome = "";
             String cpf = "";
@@ -794,11 +775,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
             if (! Funcionario.eCPFvalido(cpf))
                 throw new Exception("CPF inválido");
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-                    nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             Funcionario funcionario = banco.getFuncionarioCPF(cpf);
             
@@ -862,11 +839,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
         
         try {
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                      senha,
-           nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             String CPF = "";
         

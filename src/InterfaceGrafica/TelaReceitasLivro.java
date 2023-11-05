@@ -24,9 +24,6 @@ public class TelaReceitasLivro extends javax.swing.JFrame {
     ArrayList<JButton> botoes;
     ArrayList<JLabel> labels;
     ArrayList<JPanel> panels;
-    String usuario = "postgres";
-    String senha = "1Z2ht6b.";
-    String nomedb = "CMP1611_Felipe_Valteci_Willian";
     
     
     public TelaReceitasLivro(String ISBN) {
@@ -40,11 +37,7 @@ public class TelaReceitasLivro extends javax.swing.JFrame {
             configurarTela();
             configurarCores();
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-                    nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
 
             ArrayList<Receita> receitas = banco.getReceitasDoLivro(ISBN);
             mostrarReceitas(receitas);

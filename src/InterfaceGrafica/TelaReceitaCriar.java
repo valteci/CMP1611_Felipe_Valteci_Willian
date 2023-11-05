@@ -28,10 +28,7 @@ public class TelaReceitaCriar extends javax.swing.JFrame {
     
     ArrayList<JButton> botoes;
     ArrayList<JLabel> labels;
-    ArrayList<JPanel> panels;
-    String usuario = "postgres";
-    String senha = "1Z2ht6b.";
-    String nomedb = "CMP1611_Felipe_Valteci_Willian";
+    ArrayList<JPanel> panels;    
     
     ArrayList<IngredienteReceita> ingredientes = null;
     ArrayList<ArrayList<Object>> degustacoes = null;
@@ -493,11 +490,7 @@ public class TelaReceitaCriar extends javax.swing.JFrame {
                     codigoCategoria
             );
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-                    nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             banco.inserirReceita(receita, ingredientes);
             banco.inserirDegustacoes(degustacoes, codigoReceita);

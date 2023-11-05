@@ -24,9 +24,6 @@ public class TelaRestaurantes extends javax.swing.JFrame {
     ArrayList<JButton> botoes;
     ArrayList<JLabel> labels;
     ArrayList<JPanel> panels;
-    String usuario = "postgres";
-    String senha = "1Z2ht6b.";
-    String nomedb = "CMP1611_Felipe_Valteci_Willian";
     
     public TelaRestaurantes() {
         botoes = new ArrayList<>();
@@ -428,11 +425,7 @@ public class TelaRestaurantes extends javax.swing.JFrame {
         try {
             String nome = txt_cadastrarNome.getText();
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-                    nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             banco.inserirRestaurante(nome);
             
@@ -462,11 +455,7 @@ public class TelaRestaurantes extends javax.swing.JFrame {
             int codigo = Integer.parseInt(txt_atualizarCodigo.getText());
             String novoNome = txt_novoNome.getText();
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-                    nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             banco.getRestauranteCodigo(codigo);
             banco.atualizarRestaurante(codigo, novoNome);
@@ -496,11 +485,7 @@ public class TelaRestaurantes extends javax.swing.JFrame {
             
             int codigo = Integer.parseInt(txt_deletarCodigo.getText());
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-                    nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             
             banco.getRestauranteCodigo(codigo);
@@ -540,11 +525,7 @@ public class TelaRestaurantes extends javax.swing.JFrame {
         
         try { 
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-                    nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             ArrayList<Restaurante> restaurantes = banco.getRestaurantes();
             mostrarRestaurantes(restaurantes);
@@ -578,11 +559,7 @@ public class TelaRestaurantes extends javax.swing.JFrame {
             
             int codigo = Integer.parseInt(codigo_str);
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-          nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             Restaurante restaurante = banco.getRestauranteCodigo(codigo);
             var restaurantes = new ArrayList<Restaurante>();
@@ -614,11 +591,7 @@ public class TelaRestaurantes extends javax.swing.JFrame {
             
             int codigo = Integer.parseInt(txt_codigoTrabalhou.getText());                        
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-          nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             banco.getRestauranteCodigo(codigo);
             ArrayList<Cozinheiro> cozinheiros = banco

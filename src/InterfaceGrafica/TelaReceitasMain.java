@@ -24,9 +24,6 @@ public class TelaReceitasMain extends javax.swing.JFrame {
     ArrayList<JButton> botoes;
     ArrayList<JLabel> labels;
     ArrayList<JPanel> panels;
-    String usuario = "postgres";
-    String senha = "1Z2ht6b.";
-    String nomedb = "CMP1611_Felipe_Valteci_Willian";
     
     public TelaReceitasMain() {
         botoes = new ArrayList<>();
@@ -270,11 +267,7 @@ public class TelaReceitasMain extends javax.swing.JFrame {
         
         try { 
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-                    nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             ArrayList<Receita> receitas = banco.getReceitas();
             mostrarReceitas(receitas);
@@ -308,11 +301,7 @@ public class TelaReceitasMain extends javax.swing.JFrame {
             
             int codigo = Integer.parseInt(codigo_str);
             
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-          nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             Receita receita = banco.getReceitaCodigo(codigo);
             var receitas = new ArrayList<Receita>();
@@ -401,11 +390,7 @@ public class TelaReceitasMain extends javax.swing.JFrame {
                     model.getValueAt(linhaSelecionada, 0).toString()
             );
 
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-                    nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
             
             
             banco.getReceitaCodigo(codigoReceita);

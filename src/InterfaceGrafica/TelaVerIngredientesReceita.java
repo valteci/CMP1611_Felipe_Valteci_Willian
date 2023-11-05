@@ -19,9 +19,6 @@ import restaurantes.Restaurante;
 public class TelaVerIngredientesReceita extends javax.swing.JFrame {
 
     ArrayList<JPanel> panels;
-    String usuario = "postgres";
-    String senha = "1Z2ht6b.";
-    String nomedb = "CMP1611_Felipe_Valteci_Willian";
     
     public TelaVerIngredientesReceita(int codigoReceita) {
         
@@ -33,11 +30,7 @@ public class TelaVerIngredientesReceita extends javax.swing.JFrame {
             configurarTela();
             configurarCores();
 
-            BancoDeDados banco = BancoDeDados.getInstance(
-                    usuario,
-                    senha,
-                    nomedb
-            );
+            BancoDeDados banco = BancoDeDados.getInstance();
 
             var itens = banco.getIngredientesReceita(codigoReceita);
             mostrarIngredientes(itens);
