@@ -50,7 +50,7 @@ public class main extends javax.swing.JFrame {
         jPanelFundo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         bt_ingredientes.setBackground(new java.awt.Color(255, 255, 255));
-        bt_ingredientes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_ingredientes.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         bt_ingredientes.setForeground(new java.awt.Color(0, 0, 0));
         bt_ingredientes.setText("Ingredientes");
         bt_ingredientes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -66,11 +66,11 @@ public class main extends javax.swing.JFrame {
                 bt_ingredientesActionPerformed(evt);
             }
         });
-        jPanelFundo.add(bt_ingredientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 300, 520, 30));
+        jPanelFundo.add(bt_ingredientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 340, 520, 50));
         botoes.add(bt_ingredientes);
 
         bt_funcionarios.setBackground(new java.awt.Color(255, 255, 255));
-        bt_funcionarios.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_funcionarios.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         bt_funcionarios.setForeground(new java.awt.Color(0, 0, 0));
         bt_funcionarios.setText("Funcionários");
         bt_funcionarios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -86,11 +86,11 @@ public class main extends javax.swing.JFrame {
                 bt_funcionariosActionPerformed(evt);
             }
         });
-        jPanelFundo.add(bt_funcionarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 520, 30));
+        jPanelFundo.add(bt_funcionarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 520, 50));
         botoes.add(bt_funcionarios);
 
         bt_categoria.setBackground(new java.awt.Color(255, 255, 255));
-        bt_categoria.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_categoria.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         bt_categoria.setForeground(new java.awt.Color(0, 0, 0));
         bt_categoria.setText("Categoria");
         bt_categoria.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -106,11 +106,11 @@ public class main extends javax.swing.JFrame {
                 bt_categoriaActionPerformed(evt);
             }
         });
-        jPanelFundo.add(bt_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 520, 30));
+        jPanelFundo.add(bt_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 520, 50));
         botoes.add(bt_categoria);
 
         bt_restaurantes.setBackground(new java.awt.Color(255, 255, 255));
-        bt_restaurantes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_restaurantes.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         bt_restaurantes.setForeground(new java.awt.Color(0, 0, 0));
         bt_restaurantes.setText("Restaurantes");
         bt_restaurantes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -126,11 +126,11 @@ public class main extends javax.swing.JFrame {
                 bt_restaurantesActionPerformed(evt);
             }
         });
-        jPanelFundo.add(bt_restaurantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 520, 30));
+        jPanelFundo.add(bt_restaurantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 520, 50));
         botoes.add(bt_restaurantes);
 
         bt_livroReceitas.setBackground(new java.awt.Color(255, 255, 255));
-        bt_livroReceitas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_livroReceitas.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         bt_livroReceitas.setForeground(new java.awt.Color(0, 0, 0));
         bt_livroReceitas.setText("Livros de receita");
         bt_livroReceitas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -146,11 +146,11 @@ public class main extends javax.swing.JFrame {
                 bt_livroReceitasActionPerformed(evt);
             }
         });
-        jPanelFundo.add(bt_livroReceitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, 520, 30));
+        jPanelFundo.add(bt_livroReceitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 520, 50));
         botoes.add(bt_livroReceitas);
 
         bt_receitas.setBackground(new java.awt.Color(255, 255, 255));
-        bt_receitas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_receitas.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         bt_receitas.setForeground(new java.awt.Color(0, 0, 0));
         bt_receitas.setText("Receitas");
         bt_receitas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -166,7 +166,7 @@ public class main extends javax.swing.JFrame {
                 bt_receitasActionPerformed(evt);
             }
         });
-        jPanelFundo.add(bt_receitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 350, 520, 30));
+        jPanelFundo.add(bt_receitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 410, 520, 50));
         botoes.add(bt_receitas);
 
         getContentPane().add(jPanelFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 870, 520));
