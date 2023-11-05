@@ -22,6 +22,10 @@ import restaurantes.Restaurante;
  */
 public interface IBancoDeDados {
     
+    public boolean existeBanco();
+    public void criarBanco();
+    
+    
     //CRUD FUNCIONARIO
     public ArrayList<Funcionario> getFuncionarios() throws Exception;
     public Funcionario getFuncionarioCPF(String cpf) throws Exception;

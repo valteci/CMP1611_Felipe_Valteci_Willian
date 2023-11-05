@@ -71,6 +71,160 @@ public class BancoDeDados implements IBancoDeDados {
     }
     
     
+    private void criarTabelas(String sql) {
+        
+        String url = getUrl();
+        String[] sqlStatements = sql.split(";");
+        
+         try (Connection conn = DriverManager.getConnection(url, usuario, senha)) {
+            try (Statement stmt = conn.createStatement()) {
+                for (String statement : sqlStatements) {
+                    statement = statement.trim(); // Remover espaços em branco
+                    if (!statement.isEmpty()) {
+                        stmt.executeUpdate(statement);
+                    }
+                }
+            }
+        } catch (Exception e) {
+        }
+    }
+    
+    @Override
+    public void criarBanco() {
+        
+        String url = "jdbc:postgresql://localhost/";
+        
+        try (Connection conn = DriverManager.getConnection(url, usuario, senha);
+             Statement stmt = conn.createStatement()) {
+
+            // Comando SQL para criar o banco de dados
+            String sql = "CREATE DATABASE " + nomeDatabase;
+
+            // Executar o comando SQL
+            stmt.executeUpdate(sql);
+            
+            String sql_tabelas = """
+                                 CREATE TABLE Profissionais (
+                                     Cpf_Profissional BIGINT PRIMARY KEY
+                                 );
+                                 CREATE TABLE Cozinheiros (
+                                     Nome_Coz VARCHAR(80) NOT NULL UNIQUE,
+                                     Nome_Fantasia VARCHAR(80) NOT NULL,
+                                     Dt_Contrato_Coz DATE NOT NULL,
+                                     Salario_Coz NUMERIC(8, 2),
+                                     Cpf_Coz BIGINT PRIMARY KEY,
+                                     FOREIGN KEY(cpf_coz) REFERENCES Profissionais(cpf_profissional) ON DELETE CASCADE ON UPDATE CASCADE
+                                 );
+                                 CREATE TABLE Degustadores (
+                                     Nome_Deg VARCHAR(80) NOT NULL UNIQUE,
+                                     Dt_Contrato_Deg DATE NOT NULL,
+                                     Salario_Deg NUMERIC(8, 2),
+                                     Cpf_Deg BIGINT PRIMARY KEY,
+                                 	FOREIGN KEY(Cpf_Deg) REFERENCES Profissionais(cpf_profissional) ON DELETE CASCADE ON UPDATE CASCADE
+                                 );
+                                 CREATE TABLE Editores (
+                                     Nome_Edit VARCHAR(80) NOT NULL UNIQUE,
+                                     Dt_Contrato_Edit DATE NOT NULL,
+                                     Salario_Edit NUMERIC(8, 2),
+                                     Cpf_Edit BIGINT PRIMARY KEY,
+                                 	FOREIGN KEY(Cpf_Edit) REFERENCES Profissionais(cpf_profissional) ON DELETE CASCADE ON UPDATE CASCADE
+                                 );
+                                 CREATE TABLE Livros (
+                                     ISBN INT PRIMARY KEY,  -- Defina a coluna ISBN como chave primária
+                                     Titulo VARCHAR(200) NOT NULL,
+                                     Cpf_Edit BIGINT NOT NULL,
+                                     FOREIGN KEY(Cpf_Edit) REFERENCES Editores(Cpf_Edit) ON DELETE CASCADE ON UPDATE CASCADE
+                                 );
+                                 CREATE TABLE Categoria_Receita (
+                                     Cod_Cat_Rec SERIAL PRIMARY KEY,
+                                     Desc_Cat_Rec VARCHAR(40) NOT NULL
+                                 );
+                                 CREATE TABLE Receitas (
+                                     Cod_Receita SERIAL PRIMARY KEY,
+                                     Nome_Receita VARCHAR(80) NOT NULL,
+                                     Nome_Coz VARCHAR(80) REFERENCES Cozinheiros(Nome_Coz) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
+                                     Data_Criacao DATE NOT NULL,
+                                     Cpf_Coz BIGINT REFERENCES Cozinheiros(Cpf_Coz) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
+                                     Cod_Cat_Rec INT REFERENCES Categoria_Receita(Cod_Cat_Rec) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL, 
+                                     UNIQUE(Nome_Receita, cpf_coz)
+                                 );
+                                 CREATE TABLE Restaurantes (
+                                     Nome_Restaurante VARCHAR(80) NOT NULL,
+                                     Cod_Restaurante INT PRIMARY KEY
+                                 );
+                                 CREATE TABLE Ingrediente (
+                                     Cod_Ingrediente SERIAL PRIMARY KEY,
+                                     Nome_Ingrediente VARCHAR(40) NOT NULL
+                                 );
+                                 CREATE TABLE Ingredientes_Receita (
+                                     Cod_Receita INT REFERENCES Receitas(Cod_Receita) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
+                                     Cod_Ingrediente INT REFERENCES Ingrediente(Cod_Ingrediente) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
+                                     Quant_Ingrediente NUMERIC(4, 2) NOT NULL,
+                                     Medida VARCHAR(10) NOT NULL,
+                                     PRIMARY KEY (Cod_Receita, Cod_Ingrediente)
+                                 );
+                                 CREATE TABLE Testa (
+                                     Cpf_Deg_Test BIGINT REFERENCES Degustadores(Cpf_Deg),
+                                     Cod_Rec_Test INT REFERENCES Receitas(Cod_Receita),
+                                     Dt_Teste DATE NOT NULL,
+                                     Nota_Teste NUMERIC(8, 2) NOT NULL,
+                                     PRIMARY KEY (Cpf_Deg_Test, Cod_Rec_Test)
+                                 );
+                                 CREATE TABLE Inclui (
+                                     Cod_Receita INT REFERENCES Receitas(Cod_Receita) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
+                                     ISBN INT REFERENCES Livros(ISBN) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
+                                     PRIMARY KEY (Cod_Receita,ISBN)
+                                 );
+                                 CREATE TABLE Possui (
+                                     Cod_Receita INT REFERENCES Receitas(Cod_Receita) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
+                                     Cod_Ingrediente INT REFERENCES Ingrediente(Cod_Ingrediente) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
+                                     PRIMARY KEY (Cod_Receita, Cod_Ingrediente)
+                                 );
+                                 CREATE TABLE Curriculo (
+                                     Cpf_Coz BIGINT,
+                                     Cod_Restaurante INT,
+                                     Dt_Contrato_Coz DATE NOT NULL,
+                                     PRIMARY KEY(Cpf_Coz, Cod_Restaurante),
+                                     FOREIGN KEY(Cpf_Coz) REFERENCES Cozinheiros(Cpf_Coz) ON DELETE CASCADE ON UPDATE CASCADE,
+                                     FOREIGN KEY(Cod_Restaurante) REFERENCES Restaurantes(Cod_Restaurante) ON DELETE CASCADE ON UPDATE CASCADE
+                                 );
+                                 """;
+            
+            
+            criarTabelas(sql);
+            
+        } catch (Exception e) {
+            System.err.println("Ocorreu um erro ao criar o banco de dados: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    
+
+    
+    @Override
+    public boolean existeBanco() {
+        
+        String url = "jdbc:postgresql://localhost/";
+        
+        boolean exists = false;
+        String sql = "SELECT 1 FROM pg_database WHERE datname = '" + nomeDatabase + "'";
+        
+        try (Connection conn = DriverManager.getConnection(url, usuario, senha);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            // Se o ResultSet contiver pelo menos um resultado, o banco de dados existe
+            exists = rs.next();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        
+        return exists;
+    }
+    
+    
     @Override
     public ArrayList<Funcionario> getFuncionarios() throws Exception {
         ArrayList<Funcionario> resultado = new ArrayList<>();
